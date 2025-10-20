@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Prototype</title>
+    <style>
+      .device {
+        margin: auto;
+        width: 640px;
+        height: 960px;
+        overflow: hidden;
+        background-color: powderblue;
+        position: relative;
+      }
+
+      h1 {
+        font-size: 56pt;
+      }
+
+      .tablink {
+        background-color: #555;
+        color: white;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 20%;
+        height: 80px;
+      }
+
+      .tablink:hover {
+        background-color: #777;
+      }
+    /*Styled buttons/tabs, some code structure taken from w3schools @ https://www.w3schools.com/howto/howto_js_tab_header.asp */
+      .tabcontent {
+        color: white;
+        display: none;
+        padding: 50px;
+        text-align: center;
+        height: 780px;
+      }
+
+      #Text {
+        background-color: red;
+      }
+      #LR {
+        background-color: orange;
+      }
+      #Colors {
+        background-color: grey;
+      }
+      #Profile {
+        background-color: green;
+      }
+      #Choices {
+        background-color: blue;
+      }
+
+      .icon {
+        height: 25px;
+      }
+
+      .clickable-image {
+        height: 120px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        transition: border-color 0.3s, transform 0.2s;
+      }
+
+      .clickable-image:hover {
+        transform: scale(1.1);
+      }
+
+      .rings {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        margin: auto;
+      }
+
+      svg {
+        transform: rotate(-90deg); /* Start at top */
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .ringback {
+        stroke: #444;
+        fill: none;
+      }
+
+      .ringfill {
+        fill: none;
+        stroke-linecap: butt;
+      }
+
+      .controls {
+        margin-top: 30px;
+        display: flex;
+        gap: 10px;
+      }
+
+      input[type="number"] {
+        width: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="device">
+      <!-- TAB 1 -->
+      <div id="Text" class="tabcontent">
+        <h1>Text Screen</h1>
+        <div style="height: 700px; width: 500px; overflow: auto; padding: 10px">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce turpis
+          risus, feugiat at congue et, vehicula in quam. Vestibulum ante ipsum
+          primis in faucibus orci luctus et ultrices posuere cubilia curae; In
+          cursus accumsan porta. Suspendisse nisi odio, aliquet ut risus ut,
+          vestibulum sodales tortor. Mauris efficitur egestas porta. Morbi
+          luctus, velit sed sodales blandit, leo risus condimentum orci, eget
+          tristique augue purus id mi. Nulla lobortis et felis sit amet
+          sagittis. Aliquam erat volutpat. Integer arcu nisl, eleifend placerat
+          sapien eu, tincidunt tempor turpis. Donec nulla urna, faucibus non
+          molestie pulvinar, tristique vel nunc. Aliquam in fringilla sapien.
+          Nam malesuada mi eu mauris efficitur, at consectetur est consectetur.
+          Vivamus aliquam turpis ac viverra ultrices. Nunc sed quam in erat
+          dapibus egestas. In vitae dolor et libero gravida gravida. Vivamus id
+          velit hendrerit risus egestas molestie. Integer auctor tincidunt diam,
+          eget consectetur urna tincidunt at. In vitae hendrerit risus, tempor
+          tincidunt libero. Nam vitae volutpat magna. Nulla vulputate dictum
+          dolor sit amet sodales. In non ornare nibh. Integer quis turpis
+          tellus. Sed dapibus pellentesque pellentesque. Nullam et blandit diam.
+          Vestibulum efficitur vehicula ex, sed commodo nibh mollis non. Nunc in
+          magna a mauris posuere dictum vitae et est. Mauris aliquam mattis
+          massa vel imperdiet. Sed eget scelerisque enim. Curabitur at mattis
+          nibh. Vivamus at mi est. Nam molestie leo erat, at vestibulum mi
+          varius id. Nunc in libero nec leo eleifend varius. Donec sagittis
+          scelerisque erat nec tempus. Interdum et malesuada fames ac ante ipsum
+          primis in faucibus. Donec convallis semper mi at aliquet. Nunc quis
+          nulla ac mi tincidunt molestie. Nullam posuere efficitur sem, vel
+          congue sem venenatis porta. Etiam mollis vestibulum eros, non
+          tincidunt dui porta id. Nam vitae ipsum aliquam, elementum enim et,
+          venenatis felis. Donec porta placerat faucibus. Proin viverra
+          consequat tortor, sed imperdiet arcu viverra a. Morbi nec massa eget
+          urna pulvinar maximus. Fusce ultrices nisi nec odio commodo maximus.
+          Phasellus fringilla posuere libero sit amet blandit. In volutpat
+          consectetur nisi, sit amet malesuada erat faucibus vel. Morbi suscipit
+          laoreet augue, in elementum ipsum. Morbi egestas, sem nec faucibus
+          eleifend, turpis est egestas risus, ac sodales purus lacus sit amet
+          leo. In molestie neque vitae lorem vestibulum molestie. Nunc quis nisi
+          vitae diam ultrices porttitor ut a libero. Sed sed ligula luctus diam
+          laoreet vehicula a efficitur lectus. Vivamus placerat varius viverra.
+          Nunc fermentum nisl quis lorem molestie commodo. In hac habitasse
+          platea dictumst. Curabitur sit amet risus aliquet, aliquam nisl ut,
+          condimentum metus. Duis tellus nisi, rutrum in lacus eu, tincidunt
+          dictum felis. Sed ut ligula auctor, laoreet orci sit amet, consectetur
+          felis. Donec facilisis rhoncus dolor quis hendrerit. Suspendisse sit
+          amet rutrum felis. Sed vel augue accumsan, sagittis enim interdum,
+          aliquam augue. Donec sit amet ultrices leo. Pellentesque consectetur
+          porta risus eu ultricies. Curabitur at consectetur neque, et finibus
+          quam. Nullam vitae orci sit amet libero rhoncus porta. Donec volutpat
+          dolor id ex commodo dignissim. Phasellus ut mauris lacus. Donec
+          convallis, sapien ac rhoncus condimentum, turpis lacus congue sem,
+          eget feugiat urna dui vel nisl. Etiam mollis, nibh dapibus imperdiet
+          finibus, nunc quam dignissim sem, quis porttitor sapien quam vitae
+          nulla. Phasellus pretium malesuada risus ac dapibus. Praesent quis
+          tellus vel felis tristique volutpat sit amet et dolor. In hac
+          habitasse platea dictumst. Vivamus in scelerisque augue, luctus
+          interdum mi. Curabitur faucibus mollis turpis sed sagittis. Cras
+          commodo suscipit erat, at maximus dolor dapibus a. Etiam fringilla
+          dapibus ultrices. Nunc interdum nibh justo, ut bibendum lorem vehicula
+          non. Nunc magna ante, elementum sit amet auctor a, consectetur sit
+          amet quam. Ut feugiat id ipsum quis laoreet. Maecenas tincidunt
+          facilisis tellus non tristique. Fusce rhoncus erat ac mi consectetur
+          condimentum. Donec id turpis eu nisl iaculis ultricies. Maecenas ut
+          metus vitae velit porttitor iaculis ut id dui. Donec convallis
+          tincidunt faucibus. Etiam ut libero felis. Cras egestas ex dui, et
+          viverra ante consectetur ut. Donec tincidunt risus nec massa
+          elementum, vitae congue nisl lacinia. Curabitur tincidunt quam non
+          metus ultrices ullamcorper. Etiam aliquam porttitor dui, id porttitor
+          erat sagittis a. Praesent sit amet convallis arcu. Quisque ornare sem
+          nec cursus dictum. Nunc id ipsum felis. Aliquam sem arcu, dictum sed
+          magna et, lobortis rutrum nulla. Fusce rutrum purus magna, at bibendum
+          nisi ornare nec. Nulla varius sodales venenatis.
+        </div>
+      </div>
+
+      <!-- TAB 2 -->
+      <div id="LR" class="tabcontent">
+        <h1>Text in Lower Right Corner</h1>
+        <div
+          style="
+            position: absolute;
+            bottom: 100px;
+            right: 50px;
+            text-align: right;
+          "
+        >
+          <p>Down Here</p>
+        </div>
+      </div>
+
+      <!-- TAB 3 -->
+      <div id="Colors" class="tabcontent">
+        <h1>WealthFit</h1>
+        <div class="rings">
+        <!-- Outer Ring -->
+        <svg width="400" height="400">
+          <circle class="ringbg" cx="200" cy="200" r="180" stroke="#8B0000" stroke-width="30"/>
+          <circle class="ringfill" id="daily" cx="200" cy="200" r="180" stroke="#FF3B30" stroke-width="30"/>
+        </svg>
+
+        <!-- Middle Ring -->
+        <svg width="400" height="400">
+          <circle class="ringbg" cx="200" cy="200" r="140" stroke="#00008B" stroke-width="30"/>
+          <circle class="ringfill" id="weekly" cx="200" cy="200" r="140" stroke="#3030FF" stroke-width="30"/>
+        </svg>
+
+        <!-- Inner Ring -->
+        <svg width="400" height="400">
+          <circle class="ringbg" cx="200" cy="200" r="100" stroke="#008B00" stroke-width="30"/>
+          <circle class="ringfill" id="monthly" cx="200" cy="200" r="100" stroke="#30EE30" stroke-width="30"/>
+        </svg>
+      </div>
+
+      <div class="controls">
+        <label>Daily <input type="number" min="0" max="100" value="75" id="input1">% </label>
+        <label>Weekly <input type="number" min="0" max="100" value="50" id="input2">% </label>
+        <label>Monthly <input type="number" min="0" max="100" value="25" id="input3">% </label>
+        <button onclick="updateRings()">Update</button>
+      </div>
+
+      <script>
+        function setProgress(ringId, percent, radius) {
+          const circle = document.getElementById(ringId);
+          const circumference = 2 * Math.PI * radius;
+          const offset = circumference * (1 - percent / 100);
+          circle.style.strokeDasharray = circumference;
+          circle.style.strokeDashoffset = offset;
+        }
+
+        function updateRings() {
+          const val1 = document.getElementById('input1').value;
+          const val2 = document.getElementById('input2').value;
+          const val3 = document.getElementById('input3').value;
+
+          setProgress('daily', val1, 180);
+          setProgress('weekly', val2, 140);
+          setProgress('monthly', val3, 100);
+        }
+        </script>
+      </div>
+
+      <!-- TAB 4 -->
+      <div id="Profile" class="tabcontent">
+        <h1>User Profile</h1>
+        <img
+          src="assets/profile_icon.png"
+          class="clickable-image"
+          onclick="profileImageClicked('ProfileNotification')"
+          alt="Click me!"
+        />
+        <p style="font-weight: bold; font-size: 46px">John Doe</p>
+
+        <div style="
+            display: none;
+            background-color: grey;
+            width: fit-content;
+            padding: 10px;
+            align-items: center;
+            gap:20px;
+            justify-content: center;
+            margin: 0 auto;"
+          id="ProfileNotification"
+        >
+          <p style="font-size: 20px; margin: 0">You got a notification</p>
+          <button
+            onclick="document.getElementById('ProfileNotification').style.display = 'none';"
+          >
+            Dismiss
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 5 -->
+      <div id="Choices" class="tabcontent">
+        <h1>Choices Screen</h1>
+        <h1>Appetizer:</h1>
+        <input type="radio" id="salad" name="appetizer" value="Salad" />
+        <label for="salad">Salad</label><br />
+        <input type="radio" id="soup" name="appetizer" value="Soup" />
+        <label for="soup">Soup</label><br />
+
+        <h1>Entree:</h1>
+        <select name="entrees" id="entrees">
+          <option value="Steak">Steak</option>
+          <option value="Chicken">Chicken</option>
+          <option value="Fish">Fish</option>
+          <option value="Vegetarian">Vegetarian</option>
+        </select>
+
+        <br /><br />
+        <button onclick="showSelection()">Show Selection</button>
+        <br />
+        <textarea
+          id="selectionResult"
+          rows="3"
+          cols="40"
+          readonly
+          style="margin-top: 10px"
+        ></textarea>
+      </div>
+
+      
+      <!-- BOTTOM NAVIGATION, some code structure taken from w3schools @ https://www.w3schools.com/howto/howto_js_tab_header.asp  -->
+      <button class="tablink" onclick="openTab('Text', this, 'red')">
+        <img src="assets/text_icon.png" class="icon" alt = 'text'/>
+        <br />Text
+      </button>
+      <button class="tablink" onclick="openTab('LR', this, 'orange')">
+        <img src="assets/lower_right_icon.png" class="icon" alt = 'lr'/>
+        <br />LR
+      </button>
+      <button class="tablink" onclick="openTab('Colors', this, 'grey')" id="defaultOpen">
+        <img src="assets/colors_icon.png" class="icon" alt = 'choices' />
+        <br />Home
+      </button>
+      <button class="tablink" onclick="openTab('Profile', this, 'green')">
+        <img src="assets/user.png" class="icon" alt = 'choices' />
+        <br />Profile
+      </button>
+      <button class="tablink" onclick="openTab('Choices', this, 'blue')" >
+        <img src ="assets/choices_icon.png" class="icon" alt = 'choices'/>
+        <br />Choices
+      </button>
+      
+
+      <!-- SHARED SCRIPT, some code structure taken from w3schools @ https://www.w3schools.com/howto/howto_js_tab_header.asp -->
+      <script>
+        function openTab(name, elmnt, color) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablink");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+          }
+          document.getElementById(name).style.display = "block";
+          elmnt.style.backgroundColor = color;
+        }
+
+        function profileImageClicked(id) {
+          if (id) {
+            var el = document.getElementById(id);
+            if (el) el.style.display = "flex";
+          }
+        }
+
+        function showSelection() {
+          const appetizer = document.querySelector(
+            'input[name="appetizer"]:checked'
+          );
+          const entree = document.getElementById("entrees").value;
+          let result = "";
+          if (appetizer) {
+            result += "Appetizer: " + appetizer.value + "\n";
+          } else {
+            result += "Appetizer: (none selected)\n";
+          }
+          result += "Entree: " + entree;
+          document.getElementById("selectionResult").value = result;
+        }
+
+
+        document.getElementById("defaultOpen").click();
+      </script>
+    </div>
+  </body>
+</html>

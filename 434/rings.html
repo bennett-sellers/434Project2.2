@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fitness Progress Rings</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #000;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .rings {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    svg {
+      transform: rotate(-90deg); /* Start at top */
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .ringback {
+      stroke: #444;
+      fill: none;
+    }
+
+    .ringfill {
+      fill: none;
+      stroke-linecap: butt;
+    }
+
+    .controls {
+      margin-top: 30px;
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="number"] {
+      width: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="rings">
+    <!-- Outer Ring -->
+    <svg width="200" height="200">
+      <circle class="ringbg" cx="100" cy="100" r="90" stroke-width="15"/>
+      <circle class="ringfill" id="daily" cx="100" cy="100" r="90" stroke="#FF3B30" stroke-width="15"/>
+    </svg>
+
+    <!-- Middle Ring -->
+    <svg width="200" height="200">
+      <circle class="ringbg" cx="100" cy="100" r="70" stroke-width="15"/>
+      <circle class="ringfill" id="weekly" cx="100" cy="100" r="70" stroke="#FF9500" stroke-width="15"/>
+    </svg>
+
+    <!-- Inner Ring -->
+    <svg width="200" height="200">
+      <circle class="ring-bg" cx="100" cy="100" r="50" stroke-width="15"/>
+      <circle class="ring-progress" id="monthly" cx="100" cy="100" r="50" stroke="#34C759" stroke-width="15"/>
+    </svg>
+  </div>
+
+  <div class="controls">
+    <label>Daily <input type="number" min="0" max="100" value="75" id="input1">% </label>
+    <label>Weekly <input type="number" min="0" max="100" value="50" id="input2">% </label>
+    <label>Monthly <input type="number" min="0" max="100" value="25" id="input3">% </label>
+    <button onclick="updateRings()">Update</button>
+  </div>
+
+  <script>
+    function setProgress(ringId, percent, radius) {
+      const circle = document.getElementById(ringId);
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference * (1 - percent / 100);
+      circle.style.strokeDasharray = circumference;
+      circle.style.strokeDashoffset = offset;
+    }
+
+    function updateRings() {
+      const val1 = document.getElementById('input1').value;
+      const val2 = document.getElementById('input2').value;
+      const val3 = document.getElementById('input3').value;
+
+      setProgress('daily', val1, 90);
+      setProgress('weekly', val2, 70);
+      setProgress('monthly', val3, 50);
+    }
+
+    // Initialize on page load
+    updateRings();
+  </script>
+</body>
+</html>
