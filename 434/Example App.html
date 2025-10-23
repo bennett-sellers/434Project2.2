@@ -106,6 +106,47 @@
       input[type="number"] {
         width: 50px;
       }
+
+      .toggle-btn {
+        margin-top: 20px;
+        background: #222222;
+        color: white;
+        border: 1px solid #666666;
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+
+      .bars {
+        display: none;
+        flex-direction: column;
+        gap: 40px;
+        width: 500px;
+        margin:auto;
+      }
+
+      .bar {
+        background: #222222;
+        height: 50px;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        height: 100%;
+        width: 0%;
+      }
+
+      .achievements {
+        position: absolute;
+        top: 50px;
+        height: 50px;
+        width: 100px;
+        background-color: #555555;
+        right: 0px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        color: aliceblue;
+      }
     </style>
   </head>
 
@@ -206,24 +247,33 @@
       <!-- TAB 3 -->
       <div id="Colors" class="tabcontent">
         <h1>WealthFit</h1>
-        <div class="rings">
-        <!-- Outer Ring -->
+        <button class="achievements">
+          <img src ="assets/star.png" class="icon" alt = 'star'/>
+          <br />Achievements
+        </button>
+        
+        <div class="rings" id = 'rings'>
+
         <svg width="400" height="400">
           <circle class="ringbg" cx="200" cy="200" r="180" stroke="#8B0000" stroke-width="30"/>
           <circle class="ringfill" id="daily" cx="200" cy="200" r="180" stroke="#FF3B30" stroke-width="30"/>
         </svg>
 
-        <!-- Middle Ring -->
         <svg width="400" height="400">
           <circle class="ringbg" cx="200" cy="200" r="140" stroke="#00008B" stroke-width="30"/>
           <circle class="ringfill" id="weekly" cx="200" cy="200" r="140" stroke="#3030FF" stroke-width="30"/>
         </svg>
 
-        <!-- Inner Ring -->
         <svg width="400" height="400">
           <circle class="ringbg" cx="200" cy="200" r="100" stroke="#008B00" stroke-width="30"/>
           <circle class="ringfill" id="monthly" cx="200" cy="200" r="100" stroke="#30EE30" stroke-width="30"/>
         </svg>
+      </div>
+
+      <div class="bars" id="bars">
+        <div class="bar"><div class="bar-fill" id="dailybar" style="background:#FF3B30"></div></div>
+        <div class="bar"><div class="bar-fill" id="weeklybar" style="background:#3030FF"></div></div>
+        <div class="bar"><div class="bar-fill" id="monthlybar" style="background:#30EE30"></div></div>
       </div>
 
       <div class="controls">
@@ -233,13 +283,22 @@
         <button onclick="updateRings()">Update</button>
       </div>
 
+      <button class="toggle-btn" onclick="toggle()">Progress Bars</button>
+
       <script>
+        let showingRings = true;
+
         function setProgress(ringId, percent, radius) {
           const circle = document.getElementById(ringId);
           const circumference = 2 * Math.PI * radius;
           const offset = circumference * (1 - percent / 100);
           circle.style.strokeDasharray = circumference;
           circle.style.strokeDashoffset = offset;
+        }
+
+        function setBarProgress(barId, percent) {
+          const bar = document.getElementById(barId);
+          bar.style.width = percent + '%';
         }
 
         function updateRings() {
@@ -250,7 +309,32 @@
           setProgress('daily', val1, 180);
           setProgress('weekly', val2, 140);
           setProgress('monthly', val3, 100);
+          setBarProgress('dailybar', val1);
+          setBarProgress('weeklybar', val2);
+          setBarProgress('monthlybar', val3);
         }
+
+        function setBarProgress(barId, percent) {
+          const bar = document.getElementById(barId);
+          bar.style.width = percent + '%';
+        }
+
+        function toggle() {
+          showingRings = !showingRings;
+          if(showingRings){
+            document.getElementById('rings').style.display = 'block';
+          document.getElementById('bars').style.display = 'none';
+          document.querySelector('.toggle-btn').textContent = 'Progress Bars';
+          }else{
+            document.getElementById('rings').style.display = 'none';
+            document.getElementById('bars').style.display ='flex';
+            document.querySelector('.toggle-btn').textContent ='Progress Rings';
+          }
+          
+        }
+
+        updateRings();
+
         </script>
       </div>
 
