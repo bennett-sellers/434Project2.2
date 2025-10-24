@@ -1,0 +1,250 @@
+/* Main container for the device mockup */
+.device {
+  margin: auto;
+  width: 640px;
+  height: 960px;
+  overflow: hidden;
+  background-color: powderblue;
+  position: relative;
+}
+
+h1 {
+  font-size: 56pt;
+}
+
+/* Navigation tabs styling */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 20%;
+  height: 80px;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 50px;
+  text-align: center;
+  height: 780px;
+}
+
+/* Page-specific background colors */
+#Goals {
+  background-color: red;
+}
+
+#Log {
+  background-color: orange;
+}
+
+#Home {
+  background-color: grey;
+}
+
+#Stats {
+  background-color: green;
+}
+
+#Settings {
+  background-color: blue;
+}
+
+/* Icon styling */
+.icon {
+  height: 25px;
+}
+
+.clickable-image {
+  height: 120px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: border-color 0.3s, transform 0.2s;
+}
+
+.clickable-image:hover {
+  transform: scale(1.1);
+}
+
+/* Progress rings styling */
+.rings {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: auto;
+}
+
+svg {
+  transform: rotate(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ringback {
+  stroke: #444;
+  fill: none;
+}
+
+.ringfill {
+  fill: none;
+  stroke-linecap: butt;
+}
+
+.controls {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
+.toggle-btn {
+  margin-top: 20px;
+  background: #222222;
+  color: white;
+  border: 1px solid #666666;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+/* Progress bars styling */
+.bars {
+  display: none;
+  flex-direction: column;
+  gap: 40px;
+  width: 500px;
+  margin: auto;
+}
+
+.bar {
+  background: #222222;
+  height: 50px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0%;
+}
+
+/* Achievements button */
+.achievements {
+  position: absolute;
+  top: 50px;
+  height: 50px;
+  width: 100px;
+  background-color: #555555;
+  right: 0px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  color: aliceblue;
+}
+
+/* Log/Expenses Page Styles */
+.input-container {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #4CAF50;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+.history-container {
+  margin-top: 20px;
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+span.spent-transaction {
+  background-color: red;
+}
+
+span.gained-transition {
+  background-color: green;
+}
+
+/* Manage Recurring overlay */
+.manage-overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 640px;
+  height: 960px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden auto;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.manage-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.manage-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.recurring-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-state {
+  color: #666;
+  font-size: 14px;
+  padding: 16px 0;
+}

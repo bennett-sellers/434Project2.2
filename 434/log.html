@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype - Log</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+  <body>
+    <div class="device">
+      <!-- Log/Expenses Content -->
+      <div id="Log" class="tabcontent" style="display: block;">
+        <div class="addNewTransaction">
+          <button id="addTransactionBtn" class="btn" onclick="addTransaction()">Add Transaction</button>
+          <button id="createRecurringTransactionBtn" class="btn" onclick="createRecurringTransaction()">Create Recurring Transaction</button>
+          <button id="manageRecurringBtn" class="btn" onclick="showManageRecurring()">Manage Recurring</button>
+        </div>
+
+        <div id="add-input-container" class="input-container" style="display: none">
+          <select id="categorySelect" class="input-field">
+            <option value="spent">Spent</option>
+            <option value="gained">Gained</option>
+          </select>
+          <input type="text" id="titleInput" class="input-field" placeholder="Title">
+          <input type="number" id="amountInput" class="input-field" placeholder="Amount">
+          <input type="date" id="dateInput" class="input-field" placeholder="Date">
+          <input type="time" id="timeInput" class="input-field" placeholder="Time"> 
+          <button class="btn" onclick="enterExpense()">Enter</button>
+          <button class="btn" onclick="cancelEnterExpense()">Cancel</button>
+        </div>
+
+        <div id="create-input-container" class="input-container" style="display: none">
+          <select id="createCategorySelect" class="input-field">
+            <option value="spent">Spent</option>
+            <option value="gained">Gained</option>
+          </select>
+          <input type="text" id="createTitleInput" class="input-field" placeholder="Title">
+          <input type="number" id="createAmountInput" class="input-field" placeholder="Amount">
+          <button class="btn" onclick="createExpense()">Create</button>
+          <button class="btn" onclick="cancelCreateExpense()">Cancel</button>    
+        </div>
+
+        <div id="error-message-container" class="error-message-container" style="display: none;">    
+          <span class="error-message" style="color: red;"> Must complete all fields!</span>
+        </div>
+        <div id="created-message-container" class="created-message-container" style="display: none;">    
+          <span class="created-message" style="color: green;"> Created successfully!</span>
+        </div>
+
+        <h1 style="font-size: 24pt; margin-top: 20px;">History</h1>
+        <button class="btn" onclick="toggleHistory()">Toggle History</button>
+        <div id="transactionHistory" class="history-container" style="display: none;">
+          <!-- Transactions will be displayed here -->
+        </div>
+        
+        <!-- Manage Recurring overlay -->
+        <div id="manage-recurring-container" class="manage-overlay" style="display: none;">
+          <div class="manage-header">
+            <button class="btn" onclick="toggleDisplay('manage-recurring-container', 'none')">Back</button>
+            <h2>Manage Recurring</h2>
+          </div>
+        
+          <div id="recurringList" class="recurring-list">
+            <!-- Recurring transactions will be rendered here -->
+          </div>
+        
+          <div id="recurringEmpty" class="empty-state" style="display: none;">
+            No recurring transactions yet.
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <button class="tablink" onclick="window.location.href='goals.html'">
+        <img src="assets/text_icon.png" class="icon" alt="goals"/>
+        <br />Goals
+      </button>
+      <button class="tablink" style="background-color: orange;">
+        <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
+        <br />Log
+      </button>
+      <button class="tablink" onclick="window.location.href='index.html'">
+        <img src="assets/colors_icon.png" class="icon" alt="home" />
+        <br />Home
+      </button>
+      <button class="tablink" onclick="window.location.href='stats.html'">
+        <img src="assets/user.png" class="icon" alt="stats" />
+        <br />Stats
+      </button>
+      <button class="tablink" onclick="window.location.href='settings.html'">
+        <img src="assets/choices_icon.png" class="icon" alt="settings"/>
+        <br />Settings
+      </button>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

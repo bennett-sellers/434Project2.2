@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype - Settings</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+  <body>
+    <div class="device">
+      <!-- Settings Content -->
+      <div id="Settings" class="tabcontent" style="display: block;">
+        <h1>Choices Screen</h1>
+        <h1>Appetizer:</h1>
+        <input type="radio" id="salad" name="appetizer" value="Salad" />
+        <label for="salad">Salad</label><br />
+        <input type="radio" id="soup" name="appetizer" value="Soup" />
+        <label for="soup">Soup</label><br />
+
+        <h1>Entree:</h1>
+        <select name="entrees" id="entrees">
+          <option value="Steak">Steak</option>
+          <option value="Chicken">Chicken</option>
+          <option value="Fish">Fish</option>
+          <option value="Vegetarian">Vegetarian</option>
+        </select>
+
+        <br /><br />
+        <button onclick="showSelection()">Show Selection</button>
+        <br />
+        <textarea
+          id="selectionResult"
+          rows="3"
+          cols="40"
+          readonly
+          style="margin-top: 10px"
+        ></textarea>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <button class="tablink" onclick="window.location.href='goals.html'">
+        <img src="assets/text_icon.png" class="icon" alt="goals"/>
+        <br />Goals
+      </button>
+      <button class="tablink" onclick="window.location.href='log.html'">
+        <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
+        <br />Log
+      </button>
+      <button class="tablink" onclick="window.location.href='index.html'">
+        <img src="assets/colors_icon.png" class="icon" alt="home" />
+        <br />Home
+      </button>
+      <button class="tablink" onclick="window.location.href='stats.html'">
+        <img src="assets/user.png" class="icon" alt="stats" />
+        <br />Stats
+      </button>
+      <button class="tablink" style="background-color: blue;">
+        <img src="assets/choices_icon.png" class="icon" alt="settings"/>
+        <br />Settings
+      </button>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

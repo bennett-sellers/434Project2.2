@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype - Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+  <body>
+    <div class="device">
+      <!-- Home Content with Progress Rings -->
+      <div id="Home" class="tabcontent" style="display: block;">
+        <h1>WealthFit</h1>
+        <button class="achievements">
+          <img src="assets/star.png" class="icon" alt="star"/>
+          <br />Achievements
+        </button>
+        
+        <div class="rings" id="rings">
+          <svg width="400" height="400">
+            <circle class="ringbg" cx="200" cy="200" r="180" stroke="#8B0000" stroke-width="30"/>
+            <circle class="ringfill" id="daily" cx="200" cy="200" r="180" stroke="#FF3B30" stroke-width="30"/>
+          </svg>
+
+          <svg width="400" height="400">
+            <circle class="ringbg" cx="200" cy="200" r="140" stroke="#00008B" stroke-width="30"/>
+            <circle class="ringfill" id="weekly" cx="200" cy="200" r="140" stroke="#3030FF" stroke-width="30"/>
+          </svg>
+
+          <svg width="400" height="400">
+            <circle class="ringbg" cx="200" cy="200" r="100" stroke="#008B00" stroke-width="30"/>
+            <circle class="ringfill" id="monthly" cx="200" cy="200" r="100" stroke="#30EE30" stroke-width="30"/>
+          </svg>
+        </div>
+
+        <div class="bars" id="bars">
+          <div class="bar"><div class="bar-fill" id="dailybar" style="background:#FF3B30"></div></div>
+          <div class="bar"><div class="bar-fill" id="weeklybar" style="background:#3030FF"></div></div>
+          <div class="bar"><div class="bar-fill" id="monthlybar" style="background:#30EE30"></div></div>
+        </div>
+
+        <div class="controls">
+          <label>Daily <input type="number" min="0" max="100" value="75" id="input1">% </label>
+          <label>Weekly <input type="number" min="0" max="100" value="50" id="input2">% </label>
+          <label>Monthly <input type="number" min="0" max="100" value="25" id="input3">% </label>
+          <button onclick="updateRings()">Update</button>
+        </div>
+
+        <button class="toggle-btn" onclick="toggle()">Progress Bars</button>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <button class="tablink" onclick="window.location.href='goals.html'">
+        <img src="assets/text_icon.png" class="icon" alt="goals"/>
+        <br />Goals
+      </button>
+      <button class="tablink" onclick="window.location.href='log.html'">
+        <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
+        <br />Log
+      </button>
+      <button class="tablink" style="background-color: grey;">
+        <img src="assets/colors_icon.png" class="icon" alt="home" />
+        <br />Home
+      </button>
+      <button class="tablink" onclick="window.location.href='stats.html'">
+        <img src="assets/user.png" class="icon" alt="stats" />
+        <br />Stats
+      </button>
+      <button class="tablink" onclick="window.location.href='settings.html'">
+        <img src="assets/choices_icon.png" class="icon" alt="settings"/>
+        <br />Settings
+      </button>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

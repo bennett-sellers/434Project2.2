@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype - Stats</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+  <body>
+    <div class="device">
+      <!-- Stats Content -->
+      <div id="Stats" class="tabcontent" style="display: block;">
+        <h1>User Profile</h1>
+        <img
+          src="assets/profile_icon.png"
+          class="clickable-image"
+          onclick="profileImageClicked('ProfileNotification')"
+          alt="Click me!"
+        />
+        <p style="font-weight: bold; font-size: 46px">John Doe</p>
+
+        <div style="
+            display: none;
+            background-color: grey;
+            width: fit-content;
+            padding: 10px;
+            align-items: center;
+            gap:20px;
+            justify-content: center;
+            margin: 0 auto;"
+          id="ProfileNotification"
+        >
+          <p style="font-size: 20px; margin: 0">You got a notification</p>
+          <button
+            onclick="document.getElementById('ProfileNotification').style.display = 'none';"
+          >
+            Dismiss
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <button class="tablink" onclick="window.location.href='goals.html'">
+        <img src="assets/text_icon.png" class="icon" alt="goals"/>
+        <br />Goals
+      </button>
+      <button class="tablink" onclick="window.location.href='log.html'">
+        <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
+        <br />Log
+      </button>
+      <button class="tablink" onclick="window.location.href='index.html'">
+        <img src="assets/colors_icon.png" class="icon" alt="home" />
+        <br />Home
+      </button>
+      <button class="tablink" style="background-color: green;">
+        <img src="assets/user.png" class="icon" alt="stats" />
+        <br />Stats
+      </button>
+      <button class="tablink" onclick="window.location.href='settings.html'">
+        <img src="assets/choices_icon.png" class="icon" alt="settings"/>
+        <br />Settings
+      </button>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
