@@ -5,39 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prototype - Stats</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+      .stat-section {
+        margin: 20px 0;
+        text-align: left;
+      }
+      .stat-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: white;
+      }
+      .stat-bar {
+        background: #333;
+        height: 30px;
+        border-radius: 5px;
+        margin: 10px 0;
+        overflow: hidden;
+        position: relative;
+      }
+      .stat-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4CAF50, #45a049);
+        transition: width 0.3s;
+      }
+      .stat-bar-label {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-weight: bold;
+      }
+      .stat-number {
+        font-size: 36px;
+        font-weight: bold;
+        color: #4CAF50;
+      }
+      .spent {
+        color: #FF3B30 !important;
+        background: linear-gradient(90deg, #FF3B30, #ff1a1a) !important;
+      }
+    </style>
   </head>
 
   <body>
     <div class="device">
       <!-- Stats Content -->
-      <div id="Stats" class="tabcontent" style="display: block;">
-        <h1>User Profile</h1>
-        <img
-          src="assets/profile_icon.png"
-          class="clickable-image"
-          onclick="profileImageClicked('ProfileNotification')"
-          alt="Click me!"
-        />
-        <p style="font-weight: bold; font-size: 46px">John Doe</p>
+      <div id="Stats" class="tabcontent" style="display: block; overflow-y: auto;">
+        <h1 style="font-size: 32pt;">Your Stats</h1>
 
-        <div style="
-            display: none;
-            background-color: grey;
-            width: fit-content;
-            padding: 10px;
-            align-items: center;
-            gap:20px;
-            justify-content: center;
-            margin: 0 auto;"
-          id="ProfileNotification"
-        >
-          <p style="font-size: 20px; margin: 0">You got a notification</p>
-          <button
-            onclick="document.getElementById('ProfileNotification').style.display = 'none';"
-          >
-            Dismiss
-          </button>
+        <!-- Last Week Stats -->
+        <div class="stat-section">
+          <div class="stat-title">Last 7 Days</div>
+          <div>
+            <p style="margin: 5px 0; color: white;">Total Spent: <span class="stat-number spent" id="week-spent">$0</span></p>
+            <p style="margin: 5px 0; color: white;">Total Gained: <span class="stat-number" id="week-gained">$0</span></p>
+            <p style="margin: 5px 0; color: white;">Net: <span class="stat-number" id="week-net">$0</span></p>
+          </div>
         </div>
+
+        <!-- Last Month Stats -->
+        <div class="stat-section">
+          <div class="stat-title">Last 30 Days</div>
+          <div>
+            <p style="margin: 5px 0; color: white;">Total Spent: <span class="stat-number spent" id="month-spent">$0</span></p>
+            <p style="margin: 5px 0; color: white;">Total Gained: <span class="stat-number" id="month-gained">$0</span></p>
+            <p style="margin: 5px 0; color: white;">Net: <span class="stat-number" id="month-net">$0</span></p>
+          </div>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="stat-section">
+          <div class="stat-title">Spending by Category</div>
+          <div id="category-breakdown">
+            <!-- Categories will be dynamically added here -->
+          </div>
+        </div>
+
+        <button class="btn" onclick="window.location.reload()" style="margin-top: 20px;">Refresh Stats</button>
       </div>
 
       <!-- Bottom Navigation -->

@@ -448,3 +448,141 @@ document.addEventListener('DOMContentLoaded', function() {
     loadRecurringTransactions();
   }
 });
+
+
+// ===== STATS PAGE FUNCTIONS =====
+
+function calculateStats() {
+  // Load transactions from localStorage
+  const saved = localStorage.getItem('transactions');
+  if (!saved) {
+    return;
+  }
+  
+  const transactions = JSON.parse(saved);
+  const now = new Date();
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  let weekSpent = 0;
+  let weekGained = 0;
+  let monthSpent = 0;
+  let monthGained = 0;
+  let categories = {};
+
+  transactions.forEach(t => {
+    const transactionDate = new Date(`${t.date}T${t.time}`);
+    const amount = parseFloat(t.amount) || 0;
+
+    // Last 7 days
+    if (transactionDate >= sevenDaysAgo) {
+      if (t.type === 'spent') {
+        weekSpent += amount;
+      } else if (t.type === 'gained') {
+        weekGained += amount;
+      }
+    }
+
+    // Last 30 days
+    if (transactionDate >= thirtyDaysAgo) {
+      if (t.type === 'spent') {
+        monthSpent += amount;
+      } else if (t.type === 'gained') {
+        monthGained += amount;
+      }
+
+      // Track by category (title)
+      if (!categories[t.title]) {
+        categories[t.title] = { spent: 0, gained: 0 };
+      }
+      if (t.type === 'spent') {
+        categories[t.title].spent += amount;
+      } else {
+        categories[t.title].gained += amount;
+      }
+    }
+  });
+
+  // Update week stats
+  const weekSpentEl = document.getElementById('week-spent');
+  const weekGainedEl = document.getElementById('week-gained');
+  const weekNetEl = document.getElementById('week-net');
+  
+  if (weekSpentEl) weekSpentEl.textContent = `$${weekSpent.toFixed(2)}`;
+  if (weekGainedEl) weekGainedEl.textContent = `$${weekGained.toFixed(2)}`;
+  if (weekNetEl) {
+    const weekNet = weekGained - weekSpent;
+    weekNetEl.textContent = `$${weekNet.toFixed(2)}`;
+    weekNetEl.style.color = weekNet >= 0 ? '#4CAF50' : '#FF3B30';
+  }
+
+  // Update month stats
+  const monthSpentEl = document.getElementById('month-spent');
+  const monthGainedEl = document.getElementById('month-gained');
+  const monthNetEl = document.getElementById('month-net');
+  
+  if (monthSpentEl) monthSpentEl.textContent = `$${monthSpent.toFixed(2)}`;
+  if (monthGainedEl) monthGainedEl.textContent = `$${monthGained.toFixed(2)}`;
+  if (monthNetEl) {
+    const monthNet = monthGained - monthSpent;
+    monthNetEl.textContent = `$${monthNet.toFixed(2)}`;
+    monthNetEl.style.color = monthNet >= 0 ? '#4CAF50' : '#FF3B30';
+  }
+
+  // Display category breakdown
+  displayCategoryBreakdown(categories);
+}
+
+function displayCategoryBreakdown(categories) {
+  const container = document.getElementById('category-breakdown');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  // Find max value for scaling bars
+  let maxAmount = 0;
+  Object.values(categories).forEach(cat => {
+    const total = cat.spent + cat.gained;
+    if (total > maxAmount) maxAmount = total;
+  });
+
+  // Create bars for each category
+  Object.entries(categories).forEach(([title, amounts]) => {
+    const totalSpent = amounts.spent;
+    const totalGained = amounts.gained;
+    const net = totalGained - totalSpent;
+
+    if (totalSpent > 0 || totalGained > 0) {
+      const percentage = ((totalSpent + totalGained) / maxAmount) * 100;
+      
+      container.innerHTML += `
+        <div style="margin: 15px 0;">
+          <div style="color: white; margin-bottom: 5px; font-weight: bold;">${title}</div>
+          <div class="stat-bar">
+            <div class="stat-bar-fill ${totalSpent > totalGained ? 'spent' : ''}" 
+                 style="width: ${percentage}%">
+              <span class="stat-bar-label">$${(totalSpent + totalGained).toFixed(2)}</span>
+            </div>
+          </div>
+          <div style="color: white; font-size: 12px;">
+            Spent: $${totalSpent.toFixed(2)} | Gained: $${totalGained.toFixed(2)} | Net: $${net.toFixed(2)}
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  if (Object.keys(categories).length === 0) {
+    container.innerHTML = '<p style="color: white;">No transactions in the last 30 days.</p>';
+  }
+}
+
+// Initialize stats when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // ... existing code ...
+  
+  // Calculate stats if on stats page
+  if (document.getElementById('week-spent')) {
+    calculateStats();
+  }
+});
