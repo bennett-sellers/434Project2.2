@@ -10,6 +10,13 @@
 
 h1 {
   font-size: 56pt;
+  font-family: Verdana;
+  color: white;
+   text-shadow:
+    -2px -2px 0 black, 
+     2px -2px 0 black, 
+    -2px  2px 0 black,
+     2px  2px 0 black; 
 }
 
 /* Navigation tabs styling */
@@ -48,7 +55,7 @@ h1 {
 }
 
 #Home {
-  background-color: grey;
+  background-color: #2c3138;
 }
 
 #Stats {
@@ -77,7 +84,7 @@ h1 {
 }
 
 /* Progress rings styling */
-.rings {
+/*.rings {
   position: relative;
   width: 400px;
   height: 400px;
@@ -99,7 +106,7 @@ svg {
 .ringfill {
   fill: none;
   stroke-linecap: butt;
-}
+}*/
 
 .controls {
   margin-top: 30px;
@@ -111,18 +118,18 @@ input[type="number"] {
   width: 50px;
 }
 
-.toggle-btn {
+/*.toggle-btn {
   margin-top: 20px;
   background: #222222;
   color: white;
   border: 1px solid #666666;
   padding: 10px 15px;
   border-radius: 5px;
-}
+}*/
 
 /* Progress bars styling */
 .bars {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 40px;
   width: 500px;
@@ -130,15 +137,27 @@ input[type="number"] {
 }
 
 .bar {
-  background: #222222;
+  background: #080808;
   height: 50px;
   border-radius: 20px;
   overflow: hidden;
+  border-color: #ddd;
+  border-width: 10px;
 }
 
 .bar-fill {
   height: 100%;
   width: 0%;
+}
+
+.proglabel {
+  font-family: Verdana;
+  font-size: 15pt;
+  text-shadow:
+    -1px -1px 0 black, 
+     1px -1px 0 black, 
+    -1px  1px 0 black,
+     1px  1px 0 black; 
 }
 
 /* Achievements button */

@@ -36,16 +36,17 @@ function showSelection() {
 }
 
 // Progress rings functions (for future use if needed)
-let showingRings = true;
+updateRings();
+//let showingRings = true;
 
-function setProgress(ringId, percent, radius) {
+/*function setProgress(ringId, percent, radius) {
   const circle = document.getElementById(ringId);
   if (!circle) return;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - percent / 100);
   circle.style.strokeDasharray = circumference;
   circle.style.strokeDashoffset = offset;
-}
+}*/
 
 function setBarProgress(barId, percent) {
   const bar = document.getElementById(barId);
@@ -55,20 +56,24 @@ function setBarProgress(barId, percent) {
 
 function updateRings() {
   const val1 = document.getElementById('input1');
-  const val2 = document.getElementById('input2');
+  /*const val2 = document.getElementById('input2');
   const val3 = document.getElementById('input3');
   
   if (!val1 || !val2 || !val3) return;
 
   setProgress('daily', val1.value, 180);
   setProgress('weekly', val2.value, 140);
-  setProgress('monthly', val3.value, 100);
-  setBarProgress('dailybar', val1.value);
-  setBarProgress('weeklybar', val2.value);
-  setBarProgress('monthlybar', val3.value);
+  setProgress('monthly', val3.value, 100);*/
+  const goaltotal = 100;
+  const goalprogress = val1.value;
+  const perc = Math.round(goalprogress/goaltotal * 100);
+  setBarProgress('dailybar', perc );
+  const labl = document.getElementById('proglabel');
+  labl.textContent = `You are ${perc}% of the way to your goal of $${goaltotal}!`
+  
 }
 
-function toggle() {
+/*function toggle() {
   showingRings = !showingRings;
   const ringsEl = document.getElementById('rings');
   const barsEl = document.getElementById('bars');
@@ -85,7 +90,7 @@ function toggle() {
     barsEl.style.display = 'flex';
     toggleBtn.textContent = 'Progress Rings';
   }
-}
+}*/
 
 // ===== LOG PAGE (EXPENSES) FUNCTIONS =====
 
