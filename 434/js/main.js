@@ -8,9 +8,6 @@ const goalAmountInput = document.getElementById('goalAmount');
 const goalDateInput = document.getElementById('goalDate');
 
 
-loadGoal();
-updateRings();
-
 function updateGoal(){
   goalamount = goalAmountInput.value;
   goaldate = goalDateInput.value;
