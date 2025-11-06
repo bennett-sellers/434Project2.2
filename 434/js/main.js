@@ -7,6 +7,42 @@ let expenseToggle = 'spent';
 const goalAmountInput = document.getElementById('goalAmount');
 const goalDateInput = document.getElementById('goalDate');
 
+function openAch(){
+  const panel = document.getElementById('achievementPanel');
+  panel.classList.add('open');
+  const a_goal = document.getElementById('a_goal');
+  if(localStorage.getItem("a_goal") == null){
+    a_goal.style.opacity = 0.5;
+  }else{
+    a_goal.style.opacity = 1;
+  }
+
+  const a_log = document.getElementById('a_log');
+  if(localStorage.getItem("a_log") == null){
+    a_log.style.opacity = 0.5;
+  }else{
+    a_log.style.opacity = 1;
+  }
+
+  const a_quick = document.getElementById('a_quick');
+  if(localStorage.getItem("a_quick") == null){
+    a_quick.style.opacity = 0.5;
+  }else{
+    a_quick.style.opacity = 1;
+  }
+
+  const a_7 = document.getElementById('a_7');
+  if(localStorage.getItem("a_7") == null){
+    a_7.style.opacity = 0.5;
+  }else{
+    a_7.style.opacity = 1;
+  }
+}
+
+function closeAch(){
+  const panel = document.getElementById('achievementPanel');
+  panel.classList.remove('open');
+}
 
 function updateGoal(){
   goalamount = goalAmountInput.value;
@@ -25,6 +61,7 @@ function updateGoal(){
   localStorage.setItem("goalDate", goaldate);
   const d = new Date(goaldate);
   updateWeeklyBar(goalamount, d);
+  localStorage.setItem("a_goal", "true");
 }
 
 function loadGoal(){

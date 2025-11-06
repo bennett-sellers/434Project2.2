@@ -517,3 +517,77 @@ span.gained-transition {
   font-size: 14px;
   padding: 16px 0;
 }
+
+.achievement-panel {
+  position: fixed;
+  top: 25%;
+  right: 450px;
+  width: 340px;
+  background-color: #e6c11e;
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  z-index: 11;
+  font-family: Verdana;
+}
+
+.achievement-panel.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 34px;
+  color: #080808;
+  cursor: pointer;
+}
+
+.achievement {
+  background-color: #000000;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.achievement-title {
+  font-weight: bold;
+  font-size: 20px;
+  color:#ffffff;
+  text-align: left;
+}
+
+.achievement-desc {
+  font-size: 16px;
+  color: #ffffff;
+  text-align: left;
+}
+
+#a_goal{
+  opacity: 0.5;
+}
+#a_log{
+  opacity: 0.5;
+}
+#a_quick{
+  opacity: 0.5;
+}
+#a_7{
+  opacity: 0.5;
+}
