@@ -143,7 +143,9 @@ function updateRings() {
     numamt = parseInt(amt, 10);
   }
   let goaltotal = numamt;
-  let goalprogress = val1.value * 10;
+  let curvalue = localStorage.getItem("net");
+  if (!curvalue){curvalue = 75;}
+  let goalprogress = curvalue;
   let perc = Math.round(goalprogress/goaltotal * 100);
   setBarProgress('dailybar', perc );
   const labl = document.getElementById('proglabel');
