@@ -1,3 +1,33 @@
+const goal = {
+  amount: 1000,
+  enddate: new Date(2026, 1, 1),
+  weeks: 0
+}
+updateWeeks();
+const goalAmountInput = document.getElementById('goalAmount');
+const goalDateInput = document.getElementById('goalDate');
+
+function updateGoal(){
+  goal.amount = goalAmountInput.value;
+  goal.date = goalDateInput.value;
+  arr = goal.date.split("-");
+  const d = new Date(goal.date);
+  var day = arr[2];
+  var m = arr[1];
+  var y = arr[0];
+  updateWeeks(d);
+  //updateRings();
+  const labl = document.getElementById('goallabel');
+  labl.textContent = `Goal: Save $${goal.amount} by ${m}/${day}/${y}!`;
+}
+
+function updateWeeks(date){
+  const today = new Date();
+  const difinMs = date - today;
+  const weeks = difinMs/ 604800000;
+  goal.weeks = weeks;
+}
+
 // Navigation function for tabs
 function openTab(name, elmnt, color) {
   var i, tabcontent, tablinks;
@@ -64,8 +94,8 @@ function updateRings() {
   setProgress('daily', val1.value, 180);
   setProgress('weekly', val2.value, 140);
   setProgress('monthly', val3.value, 100);*/
-  const goaltotal = 100;
-  const goalprogress = val1.value;
+  const goaltotal = 1000;
+  const goalprogress = val1.value * 10;
   const perc = Math.round(goalprogress/goaltotal * 100);
   setBarProgress('dailybar', perc );
   const labl = document.getElementById('proglabel');
