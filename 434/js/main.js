@@ -4,6 +4,7 @@ const goalDateInput = document.getElementById('goalDate');
 
 
 loadGoal();
+updateRings();
 
 function updateGoal(){
   goalamount = goalAmountInput.value;
@@ -20,6 +21,8 @@ function updateGoal(){
   labl.textContent = `Goal: Save $${goalamount.toString()} by ${m}/${day}/${y}!`;
   localStorage.setItem("goalAmount", goalamount.toString());
   localStorage.setItem("goalDate", goaldate);
+  const d = new Date(goaldate);
+  updateWeeklyBar(goalamount, d);
 }
 
 function loadGoal(){
@@ -43,13 +46,26 @@ function loadGoal(){
   var y = arr[0];
   const labl = document.getElementById('goallabel');
   labl.textContent = `Goal: Save $${goalamount.toString()} by ${m}/${day}/${y}!`;
+  const d = new Date(goaldate);
+  updateWeeklyBar(goalamount, d);
 } 
 
-function updateWeeks(date){
+function getWeeks(date){
   const today = new Date();
   const difinMs = date - today;
   const weeks = difinMs/ 604800000;
-  goal.weeks = weeks;
+  return Math.round(weeks);
+}
+
+function updateWeeklyBar(amt, date) {
+  let goaltotal = amt/getWeeks(date);
+  goaltotal = Math.round(goaltotal);
+  localStorage.setItem("net", "75");
+  let goalprogress = parseInt(localStorage.getItem("net"));
+  let perc = Math.round(goalprogress/goaltotal * 100);
+  setBarProgress('weeklybar', perc );
+  const labl = document.getElementById('goalproglabel');
+  labl.textContent = `You saved $75 this week! Save $${goaltotal.toString()} to stay on track to reach your goal of $${amt.toString()}!`;
 }
 
 // Navigation function for tabs
