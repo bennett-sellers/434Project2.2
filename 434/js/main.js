@@ -1,3 +1,8 @@
+// LOG PAGE VARIABLES
+let transactions = [];
+let recurringTransactions = [];
+let expenseToggle = 'spent';
+
 // Navigation function for tabs
 function openTab(name, elmnt, color) {
   var i, tabcontent, tablinks;
@@ -36,7 +41,11 @@ function showSelection() {
 }
 
 // Progress rings functions (for future use if needed)
-updateRings();
+// Only call updateRings if the page contains the expected input(s).
+// Calling it unconditionally can throw if elements are missing and stop the rest of the script.
+if (document.getElementById('input1')) {
+  updateRings();
+}
 //let showingRings = true;
 
 /*function setProgress(ringId, percent, radius) {
@@ -94,8 +103,28 @@ function updateRings() {
 
 // ===== LOG PAGE (EXPENSES) FUNCTIONS =====
 
-let transactions = [];
-let recurringTransactions = [];
+function toggleExpenseType(type) {
+  console.log("Toggling expense type to: " + type);
+  if (type === 'spent' || type === 'gained') {
+    expenseToggle = type;
+  }
+  const spentBtn = document.getElementById('spent-btn');
+  const gainedBtn = document.getElementById('gained-btn');
+  if (spentBtn && gainedBtn) {
+    if (expenseToggle === 'spent') {
+      spentBtn.style.backgroundColor = '#e6c11e';
+      gainedBtn.style.backgroundColor = '#222';
+      spentBtn.style.color = '#FFF';
+      gainedBtn.style.color = '#999';
+    } else {
+      gainedBtn.style.backgroundColor = '#e6c11e';
+      spentBtn.style.backgroundColor = '#222';
+      gainedBtn.style.color = '#FFF';
+      spentBtn.style.color = '#999';
+
+    }
+  }
+}
 
 function loadTransactions() {
   const saved = localStorage.getItem('transactions');
@@ -138,11 +167,11 @@ function addTransaction() {
 }
 
 function enterExpense() {
-  const category = document.getElementById('categorySelect').value;
-  const amount = document.getElementById('amountInput').value;
-  const title = document.getElementById('titleInput').value;
-  const date = document.getElementById('dateInput').value;
-  const time = document.getElementById('timeInput').value;
+  const category = expenseToggle;
+  const amount = document.getElementById('amount-input').value;
+  const title = document.getElementById('title-input').value;
+  const date = document.getElementById('date-input').value;
+  const time = document.getElementById('time-input').value;
 
   const transaction = {
     title: title,
@@ -153,23 +182,19 @@ function enterExpense() {
   };
 
   if (transaction.title == '' || transaction.amount == '' || transaction.date == '' || transaction.time == '') {
-    displayErrorMessage();
+    makeToast('Fill in all fields before entering the transaction.');
     return;
   }
 
   transactions.push(transaction);
   localStorage.setItem('transactions', JSON.stringify(transactions));
 
-  document.getElementById('amountInput').value = '';
-  document.getElementById('titleInput').value = '';
-  document.getElementById('dateInput').value = '';
-  document.getElementById('timeInput').value = '';
+  document.getElementById('amount-input').value = '';
+  document.getElementById('title-input').value = '';
+  setDefaultDateToToday('date-input');
+  setDefaultTimetoToday('time-input');
 
-  displayTransactions();
-  toggleDisplay('add-input-container', 'none');
-  toggleDisplay('addTransactionBtn', 'block');
-  toggleDisplay('createRecurringTransactionBtn', 'block');
-  toggleDisplay('manageRecurringBtn', 'block');
+  console.log(localStorage.getItem('transactions'));
 }
 
 function cancelEnterExpense() {
@@ -378,6 +403,8 @@ function displayCreatedMessage() {
 }
 
 function makeToast(message) {
+  // Changes made: increased padding, font size, borderRadius, added minWidth and centered text,
+  // and slightly stronger boxShadow to make the toast a bit bigger and more prominent.
   const toast = document.createElement('div');
   toast.textContent = message;
   Object.assign(toast.style, {
@@ -387,10 +414,12 @@ function makeToast(message) {
     transform: 'translateX(-50%) translateY(8px)',
     background: 'rgba(0,0,0,0.85)',
     color: '#fff',
-    padding: '10px 16px',
-    borderRadius: '6px',
-    fontSize: '14px',
-    boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
+    padding: '14px 20px',     // was '10px 16px' --> increased for larger hit area
+    borderRadius: '8px',      // was '6px' --> slightly rounder
+    fontSize: '16px',         // was '14px' --> a bit larger for readability
+    minWidth: '180px',        // new: ensures toast doesn't become too small
+    textAlign: 'center',      // new: keeps multi-word messages centered
+    boxShadow: '0 8px 24px rgba(0,0,0,0.3)', // stronger shadow than before
     opacity: '0',
     transition: 'opacity 260ms ease, transform 260ms ease',
     zIndex: 9999,
@@ -452,6 +481,13 @@ document.addEventListener('DOMContentLoaded', function() {
     loadTransactions();
     loadRecurringTransactions();
   }
+
+  // LOG page defaults
+  loadTransactions();
+  loadRecurringTransactions();
+  toggleExpenseType('spent');
+  setDefaultDateToToday('date-input');
+  setDefaultTimetoToday('time-input');
 });
 
 
@@ -591,3 +627,5 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateStats();
   }
 });
+
+
