@@ -3,6 +3,76 @@ let transactions = [];
 let recurringTransactions = [];
 let expenseToggle = 'spent';
 
+
+const goalAmountInput = document.getElementById('goalAmount');
+const goalDateInput = document.getElementById('goalDate');
+
+
+loadGoal();
+updateRings();
+
+function updateGoal(){
+  goalamount = goalAmountInput.value;
+  goaldate = goalDateInput.value;
+  if (!goalamount || !goaldate) {
+    alert("Please enter both an amount and a date.");
+    return;
+  }
+  arr = goaldate.split("-");
+  var day = arr[2];
+  var m = arr[1];
+  var y = arr[0];
+  const labl = document.getElementById('goallabel');
+  labl.textContent = `Goal: Save $${goalamount.toString()} by ${m}/${day}/${y}!`;
+  localStorage.setItem("goalAmount", goalamount.toString());
+  localStorage.setItem("goalDate", goaldate);
+  const d = new Date(goaldate);
+  updateWeeklyBar(goalamount, d);
+}
+
+function loadGoal(){
+  let goalamount = 0;
+  let goaldate = "";
+  let amt = localStorage.getItem("goalAmount");
+  let date = localStorage.getItem("goalDate");
+  if(amt == null || amt == ""){
+    goalamount = 1000;
+  }else{
+    goalamount = parseInt(amt, 10);
+  }
+  if(date == null){
+    goaldate = "2026-1-1";
+  }else{
+    goaldate = date;
+  }
+  arr = goaldate.split("-");
+  var day = arr[2];
+  var m = arr[1];
+  var y = arr[0];
+  const labl = document.getElementById('goallabel');
+  labl.textContent = `Goal: Save $${goalamount.toString()} by ${m}/${day}/${y}!`;
+  const d = new Date(goaldate);
+  updateWeeklyBar(goalamount, d);
+} 
+
+function getWeeks(date){
+  const today = new Date();
+  const difinMs = date - today;
+  const weeks = difinMs/ 604800000;
+  return Math.round(weeks);
+}
+
+function updateWeeklyBar(amt, date) {
+  let goaltotal = amt/getWeeks(date);
+  goaltotal = Math.round(goaltotal);
+  localStorage.setItem("net", "75");
+  let goalprogress = parseInt(localStorage.getItem("net"));
+  let perc = Math.round(goalprogress/goaltotal * 100);
+  setBarProgress('weeklybar', perc );
+  const labl = document.getElementById('goalproglabel');
+  labl.textContent = `You saved $75 this week! Save $${goaltotal.toString()} to stay on track to reach your goal of $${amt.toString()}!`;
+}
+
 // Navigation function for tabs
 function openTab(name, elmnt, color) {
   var i, tabcontent, tablinks;
@@ -41,11 +111,7 @@ function showSelection() {
 }
 
 // Progress rings functions (for future use if needed)
-// Only call updateRings if the page contains the expected input(s).
-// Calling it unconditionally can throw if elements are missing and stop the rest of the script.
-if (document.getElementById('input1')) {
-  updateRings();
-}
+updateRings();
 //let showingRings = true;
 
 /*function setProgress(ringId, percent, radius) {
@@ -73,9 +139,17 @@ function updateRings() {
   setProgress('daily', val1.value, 180);
   setProgress('weekly', val2.value, 140);
   setProgress('monthly', val3.value, 100);*/
-  const goaltotal = 100;
-  const goalprogress = val1.value;
-  const perc = Math.round(goalprogress/goaltotal * 100);
+
+  let amt = localStorage.getItem("goalAmount");
+  let numamt;
+  if(amt == null || amt == ""){
+    numamt = 1000;
+  }else{
+    numamt = parseInt(amt, 10);
+  }
+  let goaltotal = numamt;
+  let goalprogress = val1.value * 10;
+  let perc = Math.round(goalprogress/goaltotal * 100);
   setBarProgress('dailybar', perc );
   const labl = document.getElementById('proglabel');
   labl.textContent = `You are ${perc}% of the way to your goal of $${goaltotal}!`

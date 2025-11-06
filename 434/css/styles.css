@@ -19,6 +19,65 @@ h1 {
      2px  2px 0 black; 
 }
 
+h2 {
+  font-size: 24pt;
+  font-family: Verdana;
+  color: white;
+   text-shadow:
+    -2px -2px 0 black, 
+     2px -2px 0 black, 
+    -2px  2px 0 black,
+     2px  2px 0 black; 
+}
+
+.goal-flexbox{
+  display: flex;
+  justify-content: center;
+}
+
+.goal-form {
+      background: #e6c11e;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 0, auto;
+      width: 65%;
+      height: 240px;
+      text-align: center;
+    }
+
+.goal-display h2 {
+      margin-top: 0;
+    }
+
+.goal-form label {
+  font-family: Verdana;
+  font-size: 16pt;
+  font-weight: bold;
+  text-shadow:
+    -1px -1px 0 black, 
+     1px -1px 0 black, 
+    -1px  1px 0 black,
+     1px  1px 0 black; 
+  }
+
+.goal-form input {
+      width: 30%;
+      padding: 5px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+
+.goal-form button {
+  width: 50%;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  }
+
+
 /* Navigation tabs styling */
 .tablink {
   background-color: #555;

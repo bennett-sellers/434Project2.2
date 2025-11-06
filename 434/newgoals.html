@@ -12,30 +12,38 @@
       <!-- Home Content with Progress Rings -->
       <div id="Home" class="tabcontent" style="display: block;">
         <h1>WealthFit</h1>
-        <button class="achievements">
-          <img src="assets/star.png" class="icon" alt="star"/>
-          <br />Achievements
-        </button>
+        <div>
+          <h2 id = "goallabel">Goal: Save $1000 by 01/01/2026</h2>
+          <p class = "proglabel" style="text-align: left;">This Week's Progress:</p>
+        </div>
         
   
 
-        <div class="bars" id="bars">
-          <div class="bar"><div class="bar-fill" id="dailybar" style="background:#e6c11e"></div></div>
+        <div class="bars" >
+          <div class="bar"><div class="bar-fill" id="weeklybar" style="background:#e6c11e"></div></div>
         </div>
         <div>
-          <p class = "proglabel" id = "proglabel">You are 75% of the way to your goal of $1000!</p>
+          <p class = "proglabel" id = "goalproglabel">You saved $75 this week! Save $100 to stay on track to reach your goal of $1000!</p>
         </div>
+      <div class="goal-flexbox">
+        <div class="goal-form">
+          <h2>Update Goal</h2>
+          <label for="goalAmount">Target Amount ($):</label>
+          <input type="number" id="goalAmount" min="1" placeholder="$" />
+          <br>
 
-        <div class="controls">
-          <label>Progress <input type="number" min="0" max="100" value="75" id="input1">% </label>
-          <button onclick="updateRings()">Update</button>
+          <label for="goalDate">Target Date:</label>
+          <input type="date" id="goalDate" />
+          <br>
+          <button id="saveGoalBtn" onclick="updateGoal()">Save Goal</button>
         </div>
+      </div>
         
 
       </div>
 
       <!-- Bottom Navigation -->
-      <button class="tablink" onclick="window.location.href='newgoals.html'">
+      <button class="tablink" style="background-color: grey;">
         <img src="assets/text_icon.png" class="icon" alt="goals"/>
         <br />Goals
       </button>
@@ -43,7 +51,7 @@
         <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
         <br />Log
       </button>
-      <button class="tablink" style="background-color: grey;">
+      <button class="tablink" onclick="window.location.href='index.html'">
         <img src="assets/colors_icon.png" class="icon" alt="home" />
         <br />Home
       </button>
