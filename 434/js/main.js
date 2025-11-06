@@ -1,25 +1,49 @@
-const goal = {
-  amount: 1000,
-  enddate: new Date(2026, 1, 1),
-  weeks: 0
-}
-updateWeeks();
+
 const goalAmountInput = document.getElementById('goalAmount');
 const goalDateInput = document.getElementById('goalDate');
 
+
+loadGoal();
+
 function updateGoal(){
-  goal.amount = goalAmountInput.value;
-  goal.date = goalDateInput.value;
-  arr = goal.date.split("-");
-  const d = new Date(goal.date);
+  goalamount = goalAmountInput.value;
+  goaldate = goalDateInput.value;
+  if (!goalamount || !goaldate) {
+    alert("Please enter both an amount and a date.");
+    return;
+  }
+  arr = goaldate.split("-");
   var day = arr[2];
   var m = arr[1];
   var y = arr[0];
-  updateWeeks(d);
-  //updateRings();
   const labl = document.getElementById('goallabel');
-  labl.textContent = `Goal: Save $${goal.amount} by ${m}/${day}/${y}!`;
+  labl.textContent = `Goal: Save $${goalamount.toString()} by ${m}/${day}/${y}!`;
+  localStorage.setItem("goalAmount", goalamount.toString());
+  localStorage.setItem("goalDate", goaldate);
 }
+
+function loadGoal(){
+  let goalamount = 0;
+  let goaldate = "";
+  let amt = localStorage.getItem("goalAmount");
+  let date = localStorage.getItem("goalDate");
+  if(amt == null || amt == ""){
+    goalamount = 1000;
+  }else{
+    goalamount = parseInt(amt, 10);
+  }
+  if(date == null){
+    goaldate = "2026-1-1";
+  }else{
+    goaldate = date;
+  }
+  arr = goaldate.split("-");
+  var day = arr[2];
+  var m = arr[1];
+  var y = arr[0];
+  const labl = document.getElementById('goallabel');
+  labl.textContent = `Goal: Save $${goalamount.toString()} by ${m}/${day}/${y}!`;
+} 
 
 function updateWeeks(date){
   const today = new Date();
@@ -66,7 +90,7 @@ function showSelection() {
 }
 
 // Progress rings functions (for future use if needed)
-updateRings();
+
 //let showingRings = true;
 
 /*function setProgress(ringId, percent, radius) {
@@ -94,9 +118,17 @@ function updateRings() {
   setProgress('daily', val1.value, 180);
   setProgress('weekly', val2.value, 140);
   setProgress('monthly', val3.value, 100);*/
-  const goaltotal = 1000;
-  const goalprogress = val1.value * 10;
-  const perc = Math.round(goalprogress/goaltotal * 100);
+
+  let amt = localStorage.getItem("goalAmount");
+  let numamt;
+  if(amt == null || amt == ""){
+    numamt = 1000;
+  }else{
+    numamt = parseInt(amt, 10);
+  }
+  let goaltotal = numamt;
+  let goalprogress = val1.value * 10;
+  let perc = Math.round(goalprogress/goaltotal * 100);
   setBarProgress('dailybar', perc );
   const labl = document.getElementById('proglabel');
   labl.textContent = `You are ${perc}% of the way to your goal of $${goaltotal}!`
