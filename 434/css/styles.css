@@ -110,7 +110,7 @@ h2 {
 }
 
 #Log {
-  background-color: orange;
+  background-color: #2c3138;
 }
 
 #Home {
@@ -252,20 +252,27 @@ input[type="number"] {
 }
 
 .btn {
-  width: 100%;
+  /* width: 100%; */
   padding: 12px;
+  font-family: Verdana;
   font-size: 16px;
+  font-weight: 600; /* Weight changed by Saxon, can go back if we want */
   border: none;
   border-radius: 8px;
-  background-color: #4CAF50;
+  background-color: #e6c11e;
   color: white;
+    text-shadow:
+    -1px -1px 0 black, 
+     2px -1px 0 black, 
+    -1px  1px 0 black,
+     1px  1px 0 black;
   cursor: pointer;
   transition: background-color 0.3s;
   margin-bottom: 10px;
 }
 
 .btn:hover {
-  background-color: #45a049;
+  background-color: #bd9f1a;
 }
 
 .history-container {
@@ -286,6 +293,190 @@ span.gained-transition {
   background-color: green;
 }
 
+/* Log 2.0 Styles */
+/* #region Add Transaction Form Region */
+
+#log-header {
+  position: absolute;
+  top: 0px;
+  left: 5%;
+  font-family: Verdana;
+  font-size: 40pt;
+}
+
+#new-transaction-container { /* div */
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  width: 50%;
+  border-radius: 15px;
+  background-color: #3f4752;
+}
+
+#new-transaction-header {
+  font-family: Verdana;
+  font-size: 23pt;
+  margin-bottom: 10px;
+}
+
+#spent-btn, #gained-btn {
+  width: auto;
+  height: auto;
+  font-family: Verdana;
+  font-size: 24pt;
+  margin-right: 10px;
+}
+
+#amount-input {
+  width: 270px;
+  height: 50px;
+  font-family: Verdana;
+  font-size: 16pt;
+}
+
+#title-input {
+  width: 270px;
+  height: 50px;
+  font-family: Verdana;
+  font-size: 16pt;
+  margin-top: 10px;
+}
+
+#date-input, #time-input {
+  width: 270px;
+  height: 50px;
+  font-family: Verdana;
+  font-size: 16pt;
+  margin-top: 10px;
+}
+
+#enter-btn {
+  width: auto;
+  height: auto;
+  padding: 10px 50px;
+  font-family: Verdana;
+  font-size: 20pt;
+  margin-top: 10px;
+}
+/* #endregion */
+
+/* #region Quick Add Container */
+#quick-add-container {  
+  position: absolute;
+  top: 40%;
+  right: 10px;
+  width: 40%;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#quick-add-btn {
+  width: 225px;              /* square shape */
+  height: 300px;
+  display: flex;             /* centers text inside */
+  flex-direction: column;    /* stack text vertically */
+  justify-content: center;   /* vertical centering */
+  align-items: center;       /* horizontal centering */
+  font-size: 50px;
+}
+
+#manage-quick-add-btn {
+  width: 225px;              /* square shape */
+  height: 100px;
+  display: flex;             /* centers text inside */
+  flex-direction: column;    /* stack text vertically */
+  justify-content: center;   /* vertical centering */
+  align-items: center;       /* horizontal centering */
+  font-size: 20px;
+  margin-top: 20px;
+}
+/* #endregion */
+
+/* #region Test Entry Box */
+#test {
+  position: static;
+  /* top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#entry {
+  position: relative;
+  top: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 550px;
+  /* height: 150px; */
+  border-radius: 15px;
+  border: 10px solid #e6c11e;
+  background-color: #FFFFFF;
+}
+
+#entry-title {
+  /* position: relative;
+  bottom: 40px;
+  right: 200px; */
+
+  font-family: Verdana;
+  font-size: 40pt;
+  color: rgb(0, 0, 0);
+  text-align: left;
+}
+
+#entry-type {
+  /* position: relative;
+  bottom: 70px;
+  left: 20px; */
+  padding: 10px 20px;
+  border-radius: 15px;
+  width: fit-content;
+  font-family: Verdana;
+  font-size: 20pt;
+  background-color: red;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+#entry-amount {
+  /* position: relative;
+  bottom: 175px;
+  right: 40px; */
+  font-family: Verdana;
+  font-size: 40pt;
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+#edit-btn {
+  /* position: relative;
+  bottom: 350px;
+  left: 180px; */
+  /* width: 100px; */
+  height: auto;
+  padding: 10px 50px;
+  font-family: Verdana;
+  font-size: 20pt;
+  text-align: center;
+}
+
+#delete-btn {
+  /* position: relative; */
+
+  width: auto;
+  height: auto;
+  padding: 10px 50px;
+  font-family: Verdana;
+  font-size: 20pt;
+}
+/* #endregion */
+
+
 /* Manage Recurring overlay */
 .manage-overlay {
   position: absolute;
@@ -294,7 +485,7 @@ span.gained-transition {
   transform: translateX(-50%);
   width: 640px;
   height: 960px;
-  background: #ffffff;
+  background: #2c3138;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden auto;
