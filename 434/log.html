@@ -21,10 +21,10 @@
             <button id="spent-btn" class="btn" onclick="toggleExpenseType('spent')">Spent</button>
             <button id="gained-btn" class="btn" onclick="toggleExpenseType('gained')">Gained</button>
           </div>
-          <input type="number" id="amount-input" placeholder="Amount" />
-          <input type="text" id="title-input" placeholder="Title" />
-          <input type="date" id="date-input" placeholder="Date">
-          <input type="time" id="time-input" placeholder="Time">
+          <input type="number" id="amount-input" placeholder="Amount" onclick="showLogKeyboard()"/>
+          <input type="text" id="title-input" placeholder="Title" onclick="showLogKeyboard()"/>
+          <input type="date" id="date-input" placeholder="Date" onclick="showLogKeyboard()">
+          <input type="time" id="time-input" placeholder="Time" onclick="showLogKeyboard()">
           <button id="enter-btn" class="btn" onclick="enterExpense()">Enter</button> 
         </div>
 
@@ -100,12 +100,16 @@
               <h1>New Quick Add</h1>
               <button id="new-quick-add-spent-btn" class="btn" onclick="toggleExpenseType('spent')">Spent</button>
               <button id="new-quick-add-gained-btn" class="btn" onclick="toggleExpenseType('gained')">Gained</button>
-              <input type="number" id="quick-add-amount-input" placeholder="Amount" />
-              <input type="text" id="quick-add-title-input" placeholder="Title" />
+              <input type="number" id="quick-add-amount-input" placeholder="Amount" onclick="showLogKeyboard()" />
+              <input type="text" id="quick-add-title-input" placeholder="Title" onclick="showLogKeyboard()" />
               <button id="enter-btn" class="btn" onclick="createQuickAddEntry()">Enter</button>
             </div>
           </div>
         </div>
+
+      <div id = "logKeyboard">
+          <img src = "assets\keyboard.jpeg" alt = "keyboard" width = 550px height = 250px>
+        </div> 
 
         
 

@@ -745,9 +745,9 @@ span.gained-transition {
 }
 
 .achievement-panel {
-  position: fixed;
+  position: absolute;
   top: 25%;
-  right: 650px;
+  right: 5%;
   width: 340px;
   background-color: #e6c11e;
   padding: 20px;
@@ -852,10 +852,20 @@ span.gained-transition {
   visibility: hidden;
 }
 
+#logKeyboard {
+  position: absolute;
+  bottom: 1%;
+  border: none;
+  cursor: pointer;
+  box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  visibility: hidden;
+}
+
 .history-panel {
-  position: fixed;
+  position: absolute;
   top: 25%;
-  right: 650px;
+  right: 5%;
   width: 340px;
   background-color: #e6c11e;
   padding: 20px;
@@ -864,7 +874,7 @@ span.gained-transition {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease, visibility 0.4s ease;
-  z-index: 11;
+  z-index: 110;
   font-family: Verdana;
   max-height: 400px;
   color: black;

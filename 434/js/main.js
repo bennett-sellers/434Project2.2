@@ -17,6 +17,16 @@ function hideGoalsKeyboard(){
   k.style.visibility = 'hidden';
 }
 
+function showLogKeyboard(){
+  const k = document.getElementById("logKeyboard");
+  k.style.visibility = 'visible';
+}
+
+function hideLogKeyboard(){
+  const k = document.getElementById("logKeyboard");
+  k.style.visibility = 'hidden';
+}
+
 function calculateStatsForGoal() {
   // Load transactions from localStorage
   const saved = localStorage.getItem('transactions');
@@ -358,6 +368,7 @@ function setDefaultTimetoToday(id) {
 
 
 function enterExpense() {
+  hideLogKeyboard();
   const category = expenseToggle;
   const amount = document.getElementById('amount-input').value;
   const title = document.getElementById('title-input').value;
@@ -423,6 +434,7 @@ function deleteTransaction(i) {
 
 
 function createQuickAddEntry() {
+  hideLogKeyboard();
   const category = expenseToggle;
   const amount = document.getElementById('quick-add-amount-input').value;
   const title = document.getElementById('quick-add-title-input').value;
