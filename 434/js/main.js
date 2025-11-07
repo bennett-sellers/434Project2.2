@@ -660,6 +660,7 @@ document.addEventListener('DOMContentLoaded', function() {
   loadTransactions();
   loadRecurringTransactions();
   toggleExpenseType('spent');
+  reloadQuickAdd();
   setDefaultDateToToday('date-input');
   setDefaultTimetoToday('time-input');
 });
