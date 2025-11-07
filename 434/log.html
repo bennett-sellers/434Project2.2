@@ -6,10 +6,12 @@
     <title>Prototype - Log 2.0</title>
     <link rel="stylesheet" href="css/styles.css">
   </head>
-<body>
+
+
+  <body>
     <div class="device">
       <!-- Log/Expenses Content -->
-      <div id="Log" class="tabcontent" style="display: block;">
+      <div id="Log" class="logcontent" style="display: block;">
         <h1 id="log-header">Transaction Log</h1>
 
         <div id="new-transaction-container" >
@@ -23,71 +25,95 @@
           <button id="enter-btn" class="btn" onclick="enterExpense()">Enter</button> 
         </div>
 
-        <div id="quick-add-container" >
-            <button id="quick-add-btn" class="btn" onclick="">Quick Add </button>
+        <div id="quick-add-btns-container" >
+            <button id="quick-add-btn" class="btn" onclick="toggleDisplay('quick-add-container', 'block')">Quick Add </button>
             <button id="manage-quick-add-btn" class="btn" onclick="toggleDisplay('manage-quick-add-container', 'block')">Manage Quick Add</button>
+        </div>
+
+        <div id="quick-add-container" class="manage-overlay" style="display: none;">
+          <div>
+            <button class="btn" onclick="toggleDisplay('quick-add-container', 'none')" style="margin-left: 15px;">Back</button>
+            <button class="btn new-quick-entry-btn" onclick="toggleDisplay('create-new-quick-add-overlay', 'block')">+</button>
+
+              <div id="quick-add-entries" class="expense-entry">
+
+                <!-- Sample Starts here -->
+                <!-- <div id="entry" class="expense-entry">
+                  <span style="display: inline-block; width: 50%;">Chipotle</span>
+                  <span style="display: inline-block; width: 35%;">$12.50</span>
+                  <button class="edit-btn">+</button>
+                </div>
+                <div  style="background-color: white; height: 2px; margin: 0px 20px;"></div> -->
+                <!-- Sample Ends here -->
+              </div>
+          </div>
         </div>
 
         <div id="manage-quick-add-container" class="manage-overlay" style="display: none;">
           <div>
-            <button class="btn" onclick="toggleDisplay('manage-quick-add-container', 'none')">Back</button>
+            <button class="btn" onclick="toggleDisplay('manage-quick-add-container', 'none')" style="margin-left: 15px;">Back</button>
+            <button class="btn new-quick-entry-btn" onclick="toggleDisplay('create-new-quick-add-overlay', 'block')">+</button>
 
-            <button class="btn" onclick="">Add new</button>
+              <div id="manage-quick-add-entries" class="expense-entry">
 
-              <div id="test" class="expense-entry">
-
-                <div id="entry" class="expense-entry">
-                  <div style="text-align: left; color: black;">
-                    <div style="display: inline-block;">test</div>
-                    <div style="display: inline-block;">test</div>
-                    <div style="display: inline-block;">test</div>
-                    <div style="display: inline-block;">test</div>
-                  </div>
-                  <h2 id="entry-title">Title</h2>
-                  <div><span>Spent</span><span>$</span></div>
-
-                  <button id="edit-btn" class="btn" onclick="editQuickAddEntry()">Edit</button>
-                  <button id="delete-btn" class="btn" onclick="deleteQuickAddEntry()">Delete</button>
+                <!-- Sample Starts here -->
+                <!-- <div id="entry" class="expense-entry">
+                  <span style="display: inline-block; width: 50%;">Chipotle</span>
+                  <span style="display: inline-block; width: 25%;">$12.50</span>
+                  <button class="edit-btn">🗑</button>
+                  <button class="edit-btn">✎</button>                  
                 </div>
+                <div style="background-color: white; height: 2px; margin: 0px 20px;"></div> -->
 
-
-
-
+                <!-- Sample Ends here -->
               </div>
+          </div>
+        </div>
+
+        <div id="create-new-quick-add-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; background-color: #393939b3; display: none;">
+          <div id="create-new-quick-add-container" style="z-index: 1000;" >
+            <div>
+              <button class="btn" onclick="toggleDisplay('create-new-quick-add-overlay', 'none')">Cancel</button>
+              <h1>New Quick Add</h1>
+              <button id="new-quick-add-spent-btn" class="btn" onclick="toggleExpenseType('spent')">Spent</button>
+              <button id="new-quick-add-gained-btn" class="btn" onclick="toggleExpenseType('gained')">Gained</button>
+              <input type="number" id="quick-add-amount-input" placeholder="Amount" />
+              <input type="text" id="quick-add-title-input" placeholder="Title" />
+              <button id="enter-btn" class="btn" onclick="createQuickAddEntry()">Enter</button>
             </div>
           </div>
+        </div>
+
         
-          <div id="recurringList" class="recurring-list">
-            <!-- Recurring transactions will be rendered here -->
-          </div>
-        
-          <div id="recurringEmpty" class="empty-state" style="display: none;">
-            No recurring transactions yet.
-          </div>
+
+      </div>
+
+        <!-- Bottom Navigation -->
+        <button class="tablink" onclick="window.location.href='newgoals.html'">
+            <img src="assets/text_icon.png" class="icon" alt="goals"/>
+            <br />Goals
+        </button>
+        <button class="tablink" style="background-color: orange;">
+            <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
+            <br />Log
+        </button>
+        <button class="tablink" onclick="window.location.href='index.html'">
+            <img src="assets/colors_icon.png" class="icon" alt="home" />
+            <br />Home
+        </button>
+        <button class="tablink" onclick="window.location.href='stats.html'">
+            <img src="assets/user.png" class="icon" alt="stats" />
+            <br />Stats
+        </button>
+        <button class="tablink" onclick="window.location.href='settings.html'">
+            <img src="assets/choices_icon.png" class="icon" alt="settings"/>
+            <br />Settings
+        </button>
+
       </div>
     </div>
-      <!-- Bottom Navigation -->
-      <button class="tablink" onclick="window.location.href='goals.html'">
-          <img src="assets/text_icon.png" class="icon" alt="goals"/>
-          <br />Goals
-      </button>
-      <button class="tablink" style="background-color: orange;">
-          <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
-          <br />Log
-      </button>
-      <button class="tablink" onclick="window.location.href='index.html'">
-          <img src="assets/colors_icon.png" class="icon" alt="home" />
-          <br />Home
-      </button>
-      <button class="tablink" onclick="window.location.href='stats.html'">
-          <img src="assets/user.png" class="icon" alt="stats" />
-          <br />Stats
-      </button>
-      <button class="tablink" onclick="window.location.href='settings.html'">
-          <img src="assets/choices_icon.png" class="icon" alt="settings"/>
-          <br />Settings
-      </button>
-    </div>
+
+    
     <script src="js/main.js"></script>
   </body>
 </html>

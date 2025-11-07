@@ -1,6 +1,6 @@
 // LOG PAGE VARIABLES
 let transactions = [];
-let recurringTransactions = [];
+let quickAddList = [];
 let expenseToggle = 'spent';
 
 
@@ -50,7 +50,15 @@ function loadGoal(){
   var m = arr[1];
   var y = arr[0];
   const labl = document.getElementById('goallabel');
+
+
+
+  // LINE COMMENTED FOR TESTING LOG (it was causing errors)
   labl.textContent = `Goal: Save $${goalamount.toString()} by ${m}/${day}/${y}!`;
+
+
+
+
   const d = new Date(goaldate);
   updateWeeklyBar(goalamount, d);
 } 
@@ -186,18 +194,28 @@ function toggleExpenseType(type) {
   }
   const spentBtn = document.getElementById('spent-btn');
   const gainedBtn = document.getElementById('gained-btn');
-  if (spentBtn && gainedBtn) {
+  const newSpentBtn = document.getElementById('new-quick-add-spent-btn');
+  const newGainedBtn = document.getElementById('new-quick-add-gained-btn');
+
+  if (spentBtn && gainedBtn && newSpentBtn && newGainedBtn) {
     if (expenseToggle === 'spent') {
       spentBtn.style.backgroundColor = '#e6c11e';
       gainedBtn.style.backgroundColor = '#222';
       spentBtn.style.color = '#FFF';
       gainedBtn.style.color = '#999';
+      newSpentBtn.style.backgroundColor = '#e6c11e';
+      newGainedBtn.style.backgroundColor = '#222';
+      newSpentBtn.style.color = '#FFF';
+      newGainedBtn.style.color = '#999';
     } else {
       gainedBtn.style.backgroundColor = '#e6c11e';
       spentBtn.style.backgroundColor = '#222';
       gainedBtn.style.color = '#FFF';
       spentBtn.style.color = '#999';
-
+      newGainedBtn.style.backgroundColor = '#e6c11e';
+      newSpentBtn.style.backgroundColor = '#222';
+      newGainedBtn.style.color = '#FFF';
+      newSpentBtn.style.color = '#999';
     }
   }
 }
@@ -213,7 +231,7 @@ function loadTransactions() {
 function loadRecurringTransactions() {
   const saved = localStorage.getItem('recurringTransactions');
   if (saved) {
-    recurringTransactions = JSON.parse(saved);
+    quickAddList = JSON.parse(saved);
   }
 }
 
@@ -233,14 +251,7 @@ function setDefaultTimetoToday(id) {
   timeEl.value = `${hh}:${mm}`;
 }
 
-function addTransaction() {
-  setDefaultDateToToday('dateInput');
-  setDefaultTimetoToday('timeInput');
-  toggleDisplay('add-input-container', 'block');
-  toggleDisplay('addTransactionBtn', 'none');
-  toggleDisplay('createRecurringTransactionBtn', 'none');
-  toggleDisplay('manageRecurringBtn', 'none');
-}
+
 
 function enterExpense() {
   const category = expenseToggle;
@@ -270,19 +281,9 @@ function enterExpense() {
   setDefaultDateToToday('date-input');
   setDefaultTimetoToday('time-input');
 
-  console.log(localStorage.getItem('transactions'));
+  makeToast('Transaction added to history!');
 }
 
-function cancelEnterExpense() {
-  document.getElementById('amountInput').value = '';
-  document.getElementById('titleInput').value = '';
-  document.getElementById('dateInput').value = '';
-  document.getElementById('timeInput').value = '';
-  toggleDisplay('add-input-container', 'none');
-  toggleDisplay('addTransactionBtn', 'block');
-  toggleDisplay('createRecurringTransactionBtn', 'block');
-  toggleDisplay('manageRecurringBtn', 'block');
-}
 
 function displayTransactions() {
   organizeTransactionsByDate();
@@ -314,40 +315,42 @@ function deleteTransaction(i) {
   displayTransactions();
 }
 
-function createRecurringTransaction() {
-  toggleDisplay('create-input-container', 'block');
-  toggleDisplay('addTransactionBtn', 'none');
-  toggleDisplay('createRecurringTransactionBtn', 'none');
-  toggleDisplay('manageRecurringBtn', 'none');
-}
 
-function createExpense() {
-  const category = document.getElementById('createCategorySelect').value;
-  const amount = document.getElementById('createAmountInput').value;
-  const title = document.getElementById('createTitleInput').value;
 
-  const transaction = {
+function createQuickAddEntry() {
+  const category = expenseToggle;
+  const amount = document.getElementById('quick-add-amount-input').value;
+  const title = document.getElementById('quick-add-title-input').value;
+
+  if(!category || !amount || !title ) {
+    console.log(category, amount, title)
+    makeToast("Please fill out all fields")
+    return
+  }
+
+  const quickAddEntry = {
     title: title,
     type: category,
     amount: amount
   };
 
-  if (transaction.title == '' || transaction.amount == '') {
+  if (quickAddEntry.title == '' || quickAddEntry.amount == '') {
     displayErrorMessage();
     return;
   }
 
-  recurringTransactions.push(transaction);
-  localStorage.setItem('recurringTransactions', JSON.stringify(recurringTransactions));
+  quickAddList.push(quickAddEntry);
+  localStorage.setItem('recurringTransactions', JSON.stringify(quickAddList));
 
-  document.getElementById('createAmountInput').value = '';
-  document.getElementById('createTitleInput').value = '';
+  console.log(localStorage.getItem('recurringTransactions'))
 
-  toggleDisplay('create-input-container', 'none');
-  toggleDisplay('addTransactionBtn', 'block');
-  toggleDisplay('createRecurringTransactionBtn', 'block');
-  toggleDisplay('manageRecurringBtn', 'block');
-  displayCreatedMessage();
+  document.getElementById('quick-add-amount-input').value = '';
+  document.getElementById('quick-add-title-input').value = '';
+
+  toggleDisplay('create-new-quick-add-overlay', 'none');
+  makeToast("New Quick Add entry created!")
+  reloadQuickAdd();
+  
 }
 
 function cancelCreateExpense() {
@@ -359,57 +362,97 @@ function cancelCreateExpense() {
   toggleDisplay('manageRecurringBtn', 'block');
 }
 
-function showManageRecurring() {
-  const manageDiv = document.getElementById('manage-recurring-container');
-  if (!manageDiv) return;
+// function showManageRecurring() {
+//   const manageDiv = document.getElementById('manage-recurring-container');
+//   if (!manageDiv) return;
   
-  if (manageDiv.style.display === 'none' || manageDiv.style.display === '') {
-    manageDiv.style.display = 'block';
-  } else {
-    manageDiv.style.display = 'none';
-  }
-  const empty = document.getElementById('recurringEmpty');
-  if (manageDiv.style.display === 'block') {
-    if (Array.isArray(recurringTransactions) && recurringTransactions.length > 0) {
-      empty.style.display = 'none';
-    } else {
-      empty.style.display = 'block';
-    }
-  }
-  displayRecurringTransactions();
-}
+//   if (manageDiv.style.display === 'none' || manageDiv.style.display === '') {
+//     manageDiv.style.display = 'block';
+//   } else {
+//     manageDiv.style.display = 'none';
+//   }
+//   const empty = document.getElementById('recurringEmpty');
+//   if (manageDiv.style.display === 'block') {
+//     if (Array.isArray(quickAddList) && quickAddList.length > 0) {
+//       empty.style.display = 'none';
+//     } else {
+//       empty.style.display = 'block';
+//     }
+//   }
+//   displayQuickAdd();
+// }
 
-function displayRecurringTransactions() {
-  organizeRecurringTransactionsByName();
-  const recurringListDiv = document.getElementById('recurringList');
-  if (!recurringListDiv) return;
+function displayQuickAdd() {
+  organizeQuickAddByName();
+  const quickAddListDiv = document.getElementById('quick-add-entries');
+  if (!quickAddListDiv) return;
 
-  recurringListDiv.innerHTML = '';
+  quickAddListDiv.innerHTML = '';
 
-  for (let i = 0; i < recurringTransactions.length; i++) {
-    const t = recurringTransactions[i];
+  for (let i = 0; i < quickAddList.length; i++) {
+    const t = quickAddList[i];
     const type = t.type;
 
-    recurringListDiv.innerHTML += `
-      <div class="recurring-${type}-transaction">
-        <span class="recurring-transaction-title">${t.title || ''}</span>
-        <span class="${type}">$${t.amount}</span>
-        <span class="recurring-transaction-type">${t.type}</span>
-        <button onclick="deleteRecurringTransaction(${i})">Delete</button>
-        <button onclick="showAddtoHistory(${i})">Add to History</button>
-        <input type="date" id="recurringDateInput${i}" class="input-field" placeholder="Date" style="display: none;">
-        <input type="time" id="recurringTimeInput${i}" class="input-field" placeholder="Time" style="display: none;"> 
-        <button id="confirmRecurringBtn${i}" onclick="addRecurringToHistory(${i})" style="display: none;">Confirm</button>
-        <button id="cancelRecurringBtn${i}" onclick="cancelAddToHistory(${i})" style="display: none;">Cancel</button>
+    quickAddListDiv.innerHTML += `
+      <div id="entry" class="expense-entry">
+        <span style="display: inline-block; width: 50%;">${t.title}</span>
+        <span style="display: inline-block; width: 35%;">${t.amount}</span>
+        <button class="edit-btn">+</button>
       </div>
-    `;
+      <div style="background-color: white; height: 2px; margin: 0px 20px;"></div>`
+
   }
 }
 
-function deleteRecurringTransaction(i) {
-  recurringTransactions.splice(i, 1);
-  localStorage.setItem('recurringTransactions', JSON.stringify(recurringTransactions));
-  displayRecurringTransactions();
+function reloadQuickAdd() {
+  organizeQuickAddByName();
+
+  const quickAddListDiv = document.getElementById('quick-add-entries');
+  const manageQuickAddListDiv = document.getElementById('manage-quick-add-entries')
+
+  if (!quickAddListDiv) return;
+  if (!manageQuickAddListDiv) return;
+
+  quickAddListDiv.innerHTML = '';
+  manageQuickAddListDiv.innerHTML = '';
+
+
+  for (let i = 0; i < quickAddList.length; i++) {
+    const t = quickAddList[i];
+    const type = t.type === 'spent' ? '-$' : '+$';
+
+
+    quickAddListDiv.innerHTML += `
+      <div id="entry" class="expense-entry">
+        <span style="display: inline-block; width: 50%;">${t.title}</span>
+        <span style="display: inline-block; width: 35%;">${type}${t.amount}</span>
+        <button class="edit-btn" onClick="addQuickAddEntry(${i})">+</button>
+      </div>
+      <div style="background-color: white; height: 2px; margin: 0px 20px;"></div>`;
+
+    manageQuickAddListDiv.innerHTML += `
+      <div id="entry" class="expense-entry">
+        <span style="display: inline-block; width: 50%;">${t.title}</span>
+        <span style="display: inline-block; width: 25%;">${t.amount}</span>
+        <button class="edit-btn" onClick="deleteQuickAddEntry(${i})">🗑</button>
+        <button class="edit-btn">✎</button>                  
+      </div>
+      <div style="background-color: white; height: 2px; margin: 0px 20px;"></div>`
+
+  }
+}
+
+function addQuickAddEntry(i) {
+  transactions.push(quickAddList[i]);
+  localStorage.setItem('transactions', JSON.stringify(transactions));
+  makeToast(`Added ${quickAddList[i].title || 'transaction'} to history`);
+}
+
+function deleteQuickAddEntry(i) {
+  quickAddList.splice(i, 1);
+  localStorage.setItem('recurringTransactions', JSON.stringify(quickAddList));
+  makeToast("Deleted Quick Add entry");
+  reloadQuickAdd();
 }
 
 function showAddtoHistory(i) {
@@ -422,7 +465,7 @@ function showAddtoHistory(i) {
 }
 
 function addRecurringToHistory(i) {
-  const t = recurringTransactions[i];
+  const t = quickAddList[i];
   const date = document.getElementById(`recurringDateInput${i}`).value;
   const time = document.getElementById(`recurringTimeInput${i}`).value;
 
@@ -464,19 +507,7 @@ function toggleHistory() {
   }
 }
 
-function displayErrorMessage() {
-  const box = document.getElementById('error-message-container');
-  if (!box) return;
-  box.style.display = 'block';
-  setTimeout(() => { box.style.display = 'none'; }, 2500);
-}
 
-function displayCreatedMessage() {
-  const box = document.getElementById('created-message-container');
-  if (!box) return;
-  box.style.display = 'block';
-  setTimeout(() => { box.style.display = 'none'; }, 2500);
-}
 
 function makeToast(message) {
   // Changes made: increased padding, font size, borderRadius, added minWidth and centered text,
@@ -486,16 +517,16 @@ function makeToast(message) {
   Object.assign(toast.style, {
     position: 'fixed',
     left: '50%',
-    bottom: '24px',
+    bottom: '150px',
     transform: 'translateX(-50%) translateY(8px)',
     background: 'rgba(0,0,0,0.85)',
     color: '#fff',
-    padding: '14px 20px',     // was '10px 16px' --> increased for larger hit area
-    borderRadius: '8px',      // was '6px' --> slightly rounder
-    fontSize: '16px',         // was '14px' --> a bit larger for readability
-    minWidth: '180px',        // new: ensures toast doesn't become too small
-    textAlign: 'center',      // new: keeps multi-word messages centered
-    boxShadow: '0 8px 24px rgba(0,0,0,0.3)', // stronger shadow than before
+    padding: '14px 20px',
+    borderRadius: '8px',      
+    fontSize: '24px',         
+    minWidth: '180px',        
+    textAlign: 'center',     
+    boxShadow: '0 8px 24px rgba(0,0,0,0.3)', 
     opacity: '0',
     transition: 'opacity 260ms ease, transform 260ms ease',
     zIndex: 9999,
@@ -529,19 +560,20 @@ function organizeTransactionsByDate() {
   localStorage.setItem('transactions', JSON.stringify(transactions));
 }
 
-function organizeRecurringTransactionsByName() {
-  recurringTransactions.sort((a, b) => {
+function organizeQuickAddByName() {
+  quickAddList.sort((a, b) => {
     const nameA = a.title.toLowerCase();
     const nameB = b.title.toLowerCase();
     if (nameA < nameB) return -1;
     if (nameA > nameB) return 1;
     return 0;
   });
-  localStorage.setItem('recurringTransactions', JSON.stringify(recurringTransactions));
+  localStorage.setItem('recurringTransactions', JSON.stringify(quickAddList));
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
+  console.log("startup")
   const defaultOpen = document.getElementById("defaultOpen");
   if (defaultOpen) {
     defaultOpen.click();

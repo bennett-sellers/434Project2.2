@@ -104,6 +104,12 @@ h2 {
   height: 780px;
 }
 
+.logcontent {
+  display: none;
+  padding: 50px;
+  height: 780px;
+}
+
 /* Page-specific background colors */
 #Goals {
   background-color: red;
@@ -285,16 +291,10 @@ input[type="number"] {
   background-color: #fff;
 }
 
-span.spent-transaction {
-  background-color: red;
-}
 
-span.gained-transition {
-  background-color: green;
-}
 
 /* Log 2.0 Styles */
-/* #region Add Transaction Form Region */
+
 
 #log-header {
   position: absolute;
@@ -304,6 +304,7 @@ span.gained-transition {
   font-size: 40pt;
 }
 
+/* #region Add Transaction Form Region */
 #new-transaction-container { /* div */
   position: absolute;
   top: 40%;
@@ -311,6 +312,7 @@ span.gained-transition {
   width: 50%;
   border-radius: 15px;
   background-color: #3f4752;
+  text-align: center;
 }
 
 #new-transaction-header {
@@ -319,7 +321,7 @@ span.gained-transition {
   margin-bottom: 10px;
 }
 
-#spent-btn, #gained-btn {
+#spent-btn, #gained-btn, #new-quick-add-spent-btn, #new-quick-add-gained-btn {
   width: auto;
   height: auto;
   font-family: Verdana;
@@ -327,14 +329,14 @@ span.gained-transition {
   margin-right: 10px;
 }
 
-#amount-input {
+#amount-input, #quick-add-amount-input {
   width: 270px;
   height: 50px;
   font-family: Verdana;
   font-size: 16pt;
 }
 
-#title-input {
+#title-input, #quick-add-title-input {
   width: 270px;
   height: 50px;
   font-family: Verdana;
@@ -361,7 +363,7 @@ span.gained-transition {
 /* #endregion */
 
 /* #region Quick Add Container */
-#quick-add-container {  
+#quick-add-btns-container {  
   position: absolute;
   top: 40%;
   right: 10px;
@@ -395,69 +397,53 @@ span.gained-transition {
 /* #endregion */
 
 /* #region Test Entry Box */
-#test {
-  position: static;
-  /* top: 15%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
+
+.new-quick-entry-btn {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  bottom: 70px;
+  right: 70px;
+  height: 100px;
+  width: 100px;
+  border-radius: 90px;
+  font-size: 50pt;
+}
+
+#add-quick-entry-btn {
+  color: white;
+  background-color: #333;
+  border-radius: 30px;
+  width: 50px;
+  height: 50px;
+  font-size: 30pt;
 }
 
 #entry {
-  position: relative;
-  top: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 550px;
-  /* height: 150px; */
-  border-radius: 15px;
-  border: 10px solid #e6c11e;
-  background-color: #FFFFFF;
-}
-
-#entry-title {
-  /* position: relative;
-  bottom: 40px;
-  right: 200px; */
-
   font-family: Verdana;
-  font-size: 40pt;
-  color: rgb(0, 0, 0);
+  font-size: 22pt;
+  color: white;
   text-align: left;
-}
-
-#entry-type {
-  /* position: relative;
-  bottom: 70px;
-  left: 20px; */
   padding: 10px 20px;
-  border-radius: 15px;
-  width: fit-content;
-  font-family: Verdana;
-  font-size: 20pt;
-  background-color: red;
-  color: rgb(255, 255, 255);
-  text-align: center;
 }
 
-#entry-amount {
-  /* position: relative;
-  bottom: 175px;
-  right: 40px; */
-  font-family: Verdana;
-  font-size: 40pt;
-  color: rgb(0, 0, 0);
-  text-align: center;
+.edit-btn {
+  color: white;
+  background-color: #333;
+  border-radius: 30px;
+  width: 50px;
+  height: 50px;
+  font-size: 25pt;
+  
 }
+
+.edit-btn:hover {
+  background-color: #555;
+}
+
 
 #edit-btn {
-  /* position: relative;
-  bottom: 350px;
-  left: 180px; */
-  /* width: 100px; */
   height: auto;
   padding: 10px 50px;
   font-family: Verdana;
@@ -466,18 +452,35 @@ span.gained-transition {
 }
 
 #delete-btn {
-  /* position: relative; */
-
   width: auto;
   height: auto;
   padding: 10px 50px;
   font-family: Verdana;
   font-size: 20pt;
 }
+
+#create-new-quick-add-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  border-radius: 15px;
+  background-color: #3f4752;
+  text-align: center;
+}
+
+#create-new-quick-add-container h1 {
+  font-family: Verdana;
+  font-size: 23pt;
+  margin-bottom: 10px;
+}
+
+
 /* #endregion */
 
 
-/* Manage Recurring overlay */
+/* Manage overlay */
 .manage-overlay {
   position: absolute;
   top: 0;
@@ -489,7 +492,7 @@ span.gained-transition {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden auto;
-  z-index: 1000;
+  /* z-index: 1000; */
   padding: 16px;
 }
 
