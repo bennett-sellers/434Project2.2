@@ -103,7 +103,7 @@ function updateGoal(){
   goalamount = goalAmountInput.value;
   goaldate = goalDateInput.value;
   if (!goalamount || !goaldate) {
-    alert("Please enter both an amount and a date.");
+    makeToast("Please enter both an amount and a date")
     return;
   }
   arr = goaldate.split("-");
@@ -117,6 +117,7 @@ function updateGoal(){
   const d = new Date(goaldate);
   updateWeeklyBar(goalamount, d);
   localStorage.setItem("a_goal", "true");
+  makeToast("A new goal has been set. Happy saving!");
 }
 
 function loadGoal(){
@@ -827,3 +828,14 @@ function toggleChart(x){
   }
 }
 
+function clearProgress(){
+  let userConfirmed = confirm("Are you sure you want to clear your progress? This will clear all transactions and they will not be able to be recovered.");
+
+  if (userConfirmed) {
+    localStorage.removeItem("transactions");
+    localStorage.removeItem("weeklynet");
+    makeToast("All transactions have been cleared.");
+     window.location.reload();
+  } else {
+  }
+}
