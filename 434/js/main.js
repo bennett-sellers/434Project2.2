@@ -174,7 +174,6 @@ function showSelection() {
 }
 
 // Progress rings functions (for future use if needed)
-updateRings();
 //let showingRings = true;
 
 /*function setProgress(ringId, percent, radius) {
@@ -193,7 +192,7 @@ function setBarProgress(barId, percent) {
 }
 
 function updateRings() {
-  const val1 = document.getElementById('input1');
+
   /*const val2 = document.getElementById('input2');
   const val3 = document.getElementById('input3');
   
