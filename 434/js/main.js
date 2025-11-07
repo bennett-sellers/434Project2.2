@@ -7,6 +7,16 @@ let expenseToggle = 'spent';
 const goalAmountInput = document.getElementById('goalAmount');
 const goalDateInput = document.getElementById('goalDate');
 
+function showGoalsKeyboard(){
+  const k = document.getElementById("goalsKeyboard");
+  k.style.visibility = 'visible';
+}
+
+function hideGoalsKeyboard(){
+  const k = document.getElementById("goalsKeyboard");
+  k.style.visibility = 'hidden';
+}
+
 function openAch(){
   const panel = document.getElementById('achievementPanel');
   panel.classList.add('open');
@@ -45,6 +55,7 @@ function closeAch(){
 }
 
 function updateGoal(){
+  hideGoalsKeyboard();
   goalamount = goalAmountInput.value;
   goaldate = goalDateInput.value;
   if (!goalamount || !goaldate) {
