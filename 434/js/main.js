@@ -17,6 +17,40 @@ function hideGoalsKeyboard(){
   k.style.visibility = 'hidden';
 }
 
+function calculateStatsForGoal() {
+  // Load transactions from localStorage
+  const saved = localStorage.getItem('transactions');
+  if (!saved) {
+    return;
+  }
+  //alert(`${saved}`);
+  
+  const transactions = JSON.parse(saved);
+  const now = new Date();
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+  let weekSpent = 0;
+  let weekGained = 0;
+
+  transactions.forEach(t => {
+    const transactionDate = new Date(`${t.date}T${t.time}`);
+    const amount = parseFloat(t.amount) || 0;
+
+    // Last 7 days
+    if (transactionDate >= sevenDaysAgo) {
+      if (t.type === 'spent') {
+        weekSpent += amount;
+      } else if (t.type === 'gained') {
+        weekGained += amount;
+      }
+    }
+    wn = weekGained - weekSpent;
+    localStorage.setItem("weeklynet", wn);
+  });
+
+  
+}
+
 function openAch(){
   const panel = document.getElementById('achievementPanel');
   panel.classList.add('open');
@@ -115,6 +149,7 @@ function loadGoal(){
 
 
   const d = new Date(goaldate);
+  calculateStatsForGoal();
   updateWeeklyBar(goalamount, d);
 } 
 
@@ -128,12 +163,13 @@ function getWeeks(date){
 function updateWeeklyBar(amt, date) {
   let goaltotal = amt/getWeeks(date);
   goaltotal = Math.round(goaltotal);
-  localStorage.setItem("net", "75");
-  let goalprogress = parseInt(localStorage.getItem("net"));
+  let net = localStorage.getItem("weeklynet")
+  if(net == null){net = 0};
+  let goalprogress = parseInt(net);
   let perc = Math.round(goalprogress/goaltotal * 100);
   setBarProgress('weeklybar', perc );
   const labl = document.getElementById('goalproglabel');
-  labl.textContent = `You saved $75 this week! Save $${goaltotal.toString()} to stay on track to reach your goal of $${amt.toString()}!`;
+  labl.textContent = `You saved $${goalprogress.toString()} this week! Save $${goaltotal.toString()} to stay on track to reach your goal of $${amt.toString()}!`;
 }
 
 // Navigation function for tabs
@@ -610,9 +646,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Initialize rings if they exist on the page
-  if (document.getElementById('daily')) {
-    updateRings();
-  }
+  //if (document.getElementById('daily')) {
+    //updateRings();
+  //}
   
   // Load transactions if on log page
   if (document.getElementById('transactionHistory')) {
@@ -627,6 +663,11 @@ document.addEventListener('DOMContentLoaded', function() {
   setDefaultDateToToday('date-input');
   setDefaultTimetoToday('time-input');
 });
+
+function loadLog(){
+  loadTransactions();
+  loadRecurringTransactions();
+}
 
 
 // ===== STATS PAGE FUNCTIONS =====
