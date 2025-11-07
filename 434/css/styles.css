@@ -299,7 +299,7 @@ input[type="number"]:focus {
   position: absolute;
   top: 50px;
   height: 60px;
-  width: 120px;
+  width: 150px;
   background: linear-gradient(135deg, #4a5261 0%, #3d4450 100%);
   right: 0px;
   border-top-left-radius: 30px;
@@ -309,8 +309,10 @@ input[type="number"]:focus {
   cursor: pointer;
   box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15pt;
+  font-family: Verdana, sans-serif;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
 }
 
 .achievements:hover {
@@ -744,7 +746,7 @@ span.gained-transition {
 .achievement-panel {
   position: fixed;
   top: 25%;
-  right: 450px;
+  right: 650px;
   width: 340px;
   background-color: #e6c11e;
   padding: 20px;
@@ -814,12 +816,7 @@ span.gained-transition {
 #a_7{
   opacity: 0.5;
 }
-  /* This section was not part of id or class, so it has been commented out for testing purposes. Feel free to uncomment if needed.
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 16px;
-  padding: 20px 0;
-  text-align: center;
-} */
+  
 
 /* Scrollbar styling for webkit browsers */
 .history-container::-webkit-scrollbar,
@@ -852,4 +849,88 @@ span.gained-transition {
   box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 100;
   visibility: hidden;
+}
+
+.history-panel {
+  position: fixed;
+  top: 25%;
+  right: 650px;
+  width: 340px;
+  background-color: #e6c11e;
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  z-index: 11;
+  font-family: Verdana;
+  max-height: 400px;
+  color: black;
+}
+
+.history-panel.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.history {
+  position: absolute;
+  top: 140px;
+  height: 60px;
+  width: 100px;
+  background: linear-gradient(135deg, #4a5261 0%, #3d4450 100%);
+  right: 0px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-size: 15pt;
+  font-family: Verdana, sans-serif;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+}
+
+.history:hover {
+  background: linear-gradient(135deg, #555d6e 0%, #4a5261 100%);
+  transform: translateX(-5px);
+  box-shadow: -6px 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+#weekstats{
+  position: absolute;
+  top: 200px;
+  visibility: visible;
+}
+
+#monthstats{
+  position: absolute;
+  top: 200px;
+  visibility: hidden;
+}
+
+#weekchart{
+  position: absolute;
+  top: 450px;
+  visibility: visible;
+}
+
+#monthchart{
+  position: absolute;
+  top: 450px;
+  visibility: hidden;
+}
+
+#chartinfo{
+  position: absolute;
+  top: 380px;
+}
+
+#refreshstats{
+  position: absolute;
+  top: 700px;
+  margin: auto;
 }
