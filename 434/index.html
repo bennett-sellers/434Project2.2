@@ -7,15 +7,11 @@
     <link rel="stylesheet" href="css/styles.css">
   </head>
 
-  <body>
+  <body onload = "updateRings();">
     <div class="device">
       <!-- Home Content with Progress Rings -->
       <div id="Home" class="tabcontent" style="display: block;">
         <h1>WealthFit</h1>
-        <button class="achievements">
-          <img src="assets/star.png" class="icon" alt="star"/>
-          <br />Achievements
-        </button>
         
   
 
@@ -30,6 +26,8 @@
           <label>Progress <input type="number" min="0" max="100" value="75" id="input1">% </label>
           <button onclick="updateRings()">Update</button>
         </div>
+
+        
         
 
       </div>

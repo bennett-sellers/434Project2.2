@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototype - Log 2.0</title>
+    <title>WealthFit - Transaction Log</title>
     <link rel="stylesheet" href="css/styles.css">
   </head>
 
@@ -14,10 +14,13 @@
       <div id="Log" class="logcontent" style="display: block;">
         <h1 id="log-header">Transaction Log</h1>
 
-        <div id="new-transaction-container" >
-          <h1 id="new-transaction-header">Add Transaction</h1>
-          <button id="spent-btn" class="btn" onclick="toggleExpenseType('spent')">Spent</button>
-          <button id="gained-btn" class="btn" onclick="toggleExpenseType('gained')">Gained</button>
+        <!-- Add Transaction Form -->
+        <div id="new-transaction-container">
+          <h2 id="new-transaction-header">Add Transaction</h2>
+          <div style="margin-bottom: 15px;">
+            <button id="spent-btn" class="btn" onclick="toggleExpenseType('spent')">Spent</button>
+            <button id="gained-btn" class="btn" onclick="toggleExpenseType('gained')">Gained</button>
+          </div>
           <input type="number" id="amount-input" placeholder="Amount" />
           <input type="text" id="title-input" placeholder="Title" />
           <input type="date" id="date-input" placeholder="Date">
@@ -49,6 +52,26 @@
           </div>
         </div>
 
+        <div id="quick-add-container" class="manage-overlay" style="display: none;">
+          <div>
+            <button class="btn" onclick="toggleDisplay('quick-add-container', 'none')" style="margin-left: 15px;">Back</button>
+            <button class="btn new-quick-entry-btn" onclick="toggleDisplay('create-new-quick-add-overlay', 'block')">+</button>
+
+              <div id="quick-add-entries" class="expense-entry">
+
+                <!-- Sample Starts here -->
+                <!-- <div id="entry" class="expense-entry">
+                  <span style="display: inline-block; width: 50%;">Chipotle</span>
+                  <span style="display: inline-block; width: 35%;">$12.50</span>
+                  <button class="edit-btn">+</button>
+                </div>
+                <div  style="background-color: white; height: 2px; margin: 0px 20px;"></div> -->
+                <!-- Sample Ends here -->
+              </div>
+          </div>
+        </div>
+
+        <!-- Manage Quick Add Overlay -->
         <div id="manage-quick-add-container" class="manage-overlay" style="display: none;">
           <div>
             <button class="btn" onclick="toggleDisplay('manage-quick-add-container', 'none')" style="margin-left: 15px;">Back</button>
