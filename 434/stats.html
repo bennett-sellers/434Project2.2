@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="css/styles.css" />
     <style>
       /* Local additions for stats visuals (non-destructive) */
-      .stat-section { margin: 20px 0; text-align: left; }
-      .stat-title { font-size: 24px; margin-bottom: 10px; color: white; }
-      .stat-number { font-size: 36px; font-weight: bold; color: #4CAF50; }
+      .stat-section { margin: 20px 0; text-align: left; font-size: 20px;}
+      .stat-title { font-size: 26px; margin-bottom: 10px; color: white; }
+      .stat-number { font-size: 26px; font-weight: bold; color: #4CAF50; }
       .spent { color: #FF3B30 !important; }
 
       .chart-wrap { background: rgba(0,0,0,0.15); border-radius:10px; padding:10px; }
@@ -24,12 +24,25 @@
   <body>
     <div class="device">
       <!-- Stats Content -->
-      <div id="Stats" class="tabcontent" style="display: block; overflow-y: auto;">
+      <div id="Stats" class="tabcontent" style="display: block; overflow-y: auto; font-family: Verdana;">
         <h1 style="font-size: 32pt;">Your Stats</h1>
         <button class="achievements" id = "achievements" onclick = "openAch()">
-          <img src="assets/star.png" class="icon" alt="star"/>
-          <br />Achievements
+          Achievements
         </button>
+
+        <button class="history" id = "history" onclick = "openHist()">
+          History
+        </button>
+
+        <div class="history-panel" id="historyPanel" style="display: block; overflow-y: auto;">
+          <div class="panel-header">
+            Expenses by Item
+            <button class="close-btn" id="closePanel" onclick = "closeHist()">&times;</button>
+          </div>
+            <div class="stat-section">
+              <div id="category-breakdown"></div>
+            </div>
+        </div>
 
         <div class="achievement-panel" id="achievementPanel">
           <div class="panel-header">
@@ -65,47 +78,59 @@
             </div>
           </div>
         </div>
+          
+        <div style="margin-bottom: 15px;">
+          <button id="week-btn" class="btn" onclick="toggleChart('w')">Last 7 Days</button>
+          <button id="month-btn" class="btn" onclick="toggleChart('m')">Last 30 Days</button>
+        </div>
 
         <!-- Last Week Stats -->
-        <div class="stat-section">
-          <div class="stat-title">Last 7 Days</div>
-          <p style="margin:5px 0; color:white;">Total Spent: <span class="stat-number spent" id="week-spent">$0</span></p>
-          <p style="margin:5px 0; color:white;">Total Gained: <span class="stat-number" id="week-gained">$0</span></p>
-          <p style="margin:5px 0; color:white;">Net: <span class="stat-number" id="week-net">$0</span></p>
+        <div id = 'weekstats'>
+          <div class="stat-section">
+            <div class="stat-title">Last 7 Days</div>
+            <p style="margin:5px 0; color:white;">Total Spent: <span class="stat-number spent" id="week-spent">$0</span></p>
+            <p style="margin:5px 0; color:white;">Total Gained: <span class="stat-number" id="week-gained">$0</span></p>
+            <p style="margin:5px 0; color:white;">Net: <span class="stat-number" id="week-net">$0</span></p>
+          </div>
         </div>
 
         <!-- Last Month Stats -->
-        <div class="stat-section">
-          <div class="stat-title">Last 30 Days</div>
-          <p style="margin:5px 0; color:white;">Total Spent: <span class="stat-number spent" id="month-spent">$0</span></p>
-          <p style="margin:5px 0; color:white;">Total Gained: <span class="stat-number" id="month-gained">$0</span></p>
-          <p style="margin:5px 0; color:white;">Net: <span class="stat-number" id="month-net">$0</span></p>
+        <div id = 'monthstats'>
+          <div class="stat-section">
+            <div class="stat-title">Last 30 Days</div>
+            <p style="margin:5px 0; color:white;">Total Spent: <span class="stat-number spent" id="month-spent">$0</span></p>
+            <p style="margin:5px 0; color:white;">Total Gained: <span class="stat-number" id="month-gained">$0</span></p>
+            <p style="margin:5px 0; color:white;">Net: <span class="stat-number" id="month-net">$0</span></p>
+          </div>
         </div>
 
         <!-- Category Breakdown (optional hook for your main.js) -->
-        <div class="stat-section">
-          <div class="stat-title">Spending by Category</div>
-          <div id="category-breakdown"></div>
-        </div>
+        
 
         <!-- Trends -->
         <div class="stat-section">
+          <div id ="chartinfo">
           <div class="stat-title">Trends</div>
-          <div class="legend">
-            <span><span class="key green"></span>Gained</span>
-            <span><span class="key red"></span>Spent</span>
+            <div class="legend">
+              <span><span class="key green"></span>Gained</span>
+              <span><span class="key red"></span>Spent</span>
+            </div>
           </div>
-          <div class="chart-wrap">
-            <div style="color:white; margin: 6px 0 4px;">Last 7 Days</div>
-            <canvas id="chart-week" width="540" height="180"></canvas>
+          <div id = 'weekchart'>
+            <div class="chart-wrap">
+              <div style="color:white; margin: 6px 0 4px;">Last 7 Days</div>
+              <canvas id="chart-week" width="540" height="180"></canvas>
+            </div>
           </div>
-          <div class="chart-wrap" style="margin-top:12px;">
-            <div style="color:white; margin: 6px 0 4px;">Last 30 Days</div>
-            <canvas id="chart-month" width="540" height="180"></canvas>
+          <div id="monthchart">
+            <div class="chart-wrap" style="margin-top:12px;">
+              <div style="color:white; margin: 6px 0 4px;">Last 30 Days</div>
+              <canvas id="chart-month" width="540" height="180"></canvas>
+            </div>
           </div>
         </div>
 
-        <button class="btn" onclick="window.location.reload()" style="margin-top: 20px;">Refresh Stats</button>
+        <!--<button class="btn" id="refreshstats" onclick="window.location.reload()" style="margin-top: 20px;">Refresh Stats</button> -->
       </div>
 
       <!-- Bottom Navigation (unchanged) -->

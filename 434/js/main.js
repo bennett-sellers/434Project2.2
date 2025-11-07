@@ -54,6 +54,16 @@ function closeAch(){
   panel.classList.remove('open');
 }
 
+function openHist(){
+  const panel = document.getElementById('historyPanel');
+  panel.classList.add('open');
+}
+
+function closeHist(){
+  const panel = document.getElementById('historyPanel');
+  panel.classList.remove('open');
+}
+
 function updateGoal(){
   hideGoalsKeyboard();
   goalamount = goalAmountInput.value;
@@ -719,16 +729,13 @@ function displayCategoryBreakdown(categories) {
       const percentage = ((totalSpent + totalGained) / maxAmount) * 100;
       
       container.innerHTML += `
-        <div style="margin: 15px 0;">
-          <div style="color: white; margin-bottom: 5px; font-weight: bold;">${title}</div>
+        <div style="margin: 15px 0; font-family: Verdana;">
+          <div style="color: black; font-family: Verdana; margin-bottom: 5px; font-weight: bold;">${title}</div>
           <div class="stat-bar">
             <div class="stat-bar-fill ${totalSpent > totalGained ? 'spent' : ''}" 
                  style="width: ${percentage}%">
-              <span class="stat-bar-label">$${(totalSpent + totalGained).toFixed(2)}</span>
+              <span class="stat-bar-label" >$${(totalSpent + totalGained).toFixed(2)}</span>
             </div>
-          </div>
-          <div style="color: white; font-size: 12px;">
-            Spent: $${totalSpent.toFixed(2)} | Gained: $${totalGained.toFixed(2)} | Net: $${net.toFixed(2)}
           </div>
         </div>
       `;
@@ -736,7 +743,7 @@ function displayCategoryBreakdown(categories) {
   });
 
   if (Object.keys(categories).length === 0) {
-    container.innerHTML = '<p style="color: white;">No transactions in the last 30 days.</p>';
+    container.innerHTML = '<p style="color: black;">No transactions in the last 30 days.</p>';
   }
 }
 
@@ -750,4 +757,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+function toggleChart(x){
+  const ws = document.getElementById('weekstats');
+  const ms = document.getElementById('monthstats');
+  const wc = document.getElementById('weekchart');
+  const mc = document.getElementById('monthchart');
+  if(x == "w"){
+    ws.style.visibility = 'visible';
+    wc.style.visibility = 'visible';
+    ms.style.visibility = 'hidden';
+    mc.style.visibility = 'hidden';
+  }else{
+    ms.style.visibility = 'visible';
+    mc.style.visibility = 'visible';
+    ws.style.visibility = 'hidden';
+    wc.style.visibility = 'hidden';
+  }
+}
 
