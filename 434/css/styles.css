@@ -747,7 +747,7 @@ span.gained-transition {
 .achievement-panel {
   position: fixed;
   top: 25%;
-  right: 400px;
+  right: 650px;
   width: 340px;
   background-color: #e6c11e;
   padding: 20px;
@@ -855,7 +855,7 @@ span.gained-transition {
 .history-panel {
   position: fixed;
   top: 25%;
-  right: 400px;
+  right: 650px;
   width: 340px;
   background-color: #e6c11e;
   padding: 20px;
