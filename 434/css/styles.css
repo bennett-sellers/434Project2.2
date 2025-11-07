@@ -416,7 +416,7 @@ span.gained-transition {
 }
 
 /* #region Add Transaction Form Region */
-#new-transaction-container { /* div */
+#new-transaction-container {
   position: absolute;
   top: 120px;
   left: 5%;
@@ -424,10 +424,9 @@ span.gained-transition {
   border-radius: 15px;
   background-color: #3f4752;
   text-align: center;
-  /* border-radius: 20px;
   background: linear-gradient(135deg, #3f4752 0%, #363c47 100%);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  padding: 20px; */
+  padding: 10px;
 }
 
 #new-transaction-header {
@@ -439,17 +438,19 @@ span.gained-transition {
 }
 
 #spent-btn, #gained-btn, #new-quick-add-spent-btn, #new-quick-add-gained-btn {
-  width: auto;
+  width: 140px;
   height: auto;
   font-family: Verdana, sans-serif;
   font-size: 24pt;
   margin-right: 10px;
   padding: 10px 24px;
   border-radius: 10px;
-  border: none;
-  cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  display: inline-flex;              
+  justify-content: center;    
+  align-items: center;        
+  text-align: center;   
 }
 
 #spent-btn:hover, #gained-btn:hover {
@@ -591,7 +592,7 @@ span.gained-transition {
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 70px;
+  bottom: 150px;
   right: 70px;
   height: 100px;
   width: 100px;
@@ -613,6 +614,7 @@ span.gained-transition {
   font-size: 22pt;
   color: white;
   text-align: left;
+  padding: 10px 20px;
   /* position: relative;
   top: 10px;
   margin-top: 10px;
@@ -675,6 +677,24 @@ span.gained-transition {
   margin: 5px; */
 }
 /* #endregion */
+
+#create-new-quick-add-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  border-radius: 15px;
+  background-color: #3f4752;
+  text-align: center;
+}
+
+#create-new-quick-add-container h1 {
+  font-family: Verdana;
+  font-size: 23pt;
+  margin-bottom: 10px;
+}
+
 
 
 /* Manage overlay */
@@ -794,11 +814,12 @@ span.gained-transition {
 #a_7{
   opacity: 0.5;
 }
+  /* This section was not part of id or class, so it has been commented out for testing purposes. Feel free to uncomment if needed.
   color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
   padding: 20px 0;
   text-align: center;
-}
+} */
 
 /* Scrollbar styling for webkit browsers */
 .history-container::-webkit-scrollbar,

@@ -242,23 +242,43 @@ function toggleExpenseType(type) {
   const newSpentBtn = document.getElementById('new-quick-add-spent-btn');
   const newGainedBtn = document.getElementById('new-quick-add-gained-btn');
 
-  if (spentBtn && gainedBtn && newSpentBtn && newGainedBtn) {
+  // if (spentBtn && gainedBtn && newSpentBtn && newGainedBtn) {
+  //   if (expenseToggle === 'spent') {
+  //     spentBtn.style.backgroundColor = '#e6c11e';
+  //     gainedBtn.style.backgroundColor = '#222';
+  //     spentBtn.style.color = '#FFF';
+  //     gainedBtn.style.color = '#999';
+  //     newSpentBtn.style.backgroundColor = '#e6c11e';
+  //     newGainedBtn.style.backgroundColor = '#222';
+  //     newSpentBtn.style.color = '#FFF';
+  //     newGainedBtn.style.color = '#999';
+  //   } else {
+  //     gainedBtn.style.backgroundColor = '#e6c11e';
+  //     spentBtn.style.backgroundColor = '#222';
+  //     gainedBtn.style.color = '#FFF';
+  //     spentBtn.style.color = '#999';
+  //     newGainedBtn.style.backgroundColor = '#e6c11e';
+  //     newSpentBtn.style.backgroundColor = '#222';
+  //     newGainedBtn.style.color = '#FFF';
+  //     newSpentBtn.style.color = '#999';
+  //   }
+    if (spentBtn && gainedBtn && newSpentBtn && newGainedBtn) {
     if (expenseToggle === 'spent') {
-      spentBtn.style.backgroundColor = '#e6c11e';
-      gainedBtn.style.backgroundColor = '#222';
+      spentBtn.style.background = 'linear-gradient(135deg, #e6c11e 0%, #d4b01a 100%)';
+      gainedBtn.style.background = '#222';
       spentBtn.style.color = '#FFF';
       gainedBtn.style.color = '#999';
-      newSpentBtn.style.backgroundColor = '#e6c11e';
-      newGainedBtn.style.backgroundColor = '#222';
+      newSpentBtn.style.background = 'linear-gradient(135deg, #e6c11e 0%, #d4b01a 100%)';
+      newGainedBtn.style.background = '#222';
       newSpentBtn.style.color = '#FFF';
       newGainedBtn.style.color = '#999';
     } else {
-      gainedBtn.style.backgroundColor = '#e6c11e';
-      spentBtn.style.backgroundColor = '#222';
+      gainedBtn.style.background = 'linear-gradient(135deg, #e6c11e 0%, #d4b01a 100%)';
+      spentBtn.style.background = '#222';
       gainedBtn.style.color = '#FFF';
       spentBtn.style.color = '#999';
-      newGainedBtn.style.backgroundColor = '#e6c11e';
-      newSpentBtn.style.backgroundColor = '#222';
+      newGainedBtn.style.background = 'linear-gradient(135deg, #e6c11e 0%, #d4b01a 100%)';
+      newSpentBtn.style.background = '#222';
       newGainedBtn.style.color = '#FFF';
       newSpentBtn.style.color = '#999';
     }
@@ -398,56 +418,7 @@ function createQuickAddEntry() {
   
 }
 
-function cancelCreateExpense() {
-  document.getElementById('createAmountInput').value = '';
-  document.getElementById('createTitleInput').value = '';
-  toggleDisplay('create-input-container', 'none');
-  toggleDisplay('addTransactionBtn', 'block');
-  toggleDisplay('createRecurringTransactionBtn', 'block');
-  toggleDisplay('manageRecurringBtn', 'block');
-}
 
-// function showManageRecurring() {
-//   const manageDiv = document.getElementById('manage-recurring-container');
-//   if (!manageDiv) return;
-  
-//   if (manageDiv.style.display === 'none' || manageDiv.style.display === '') {
-//     manageDiv.style.display = 'block';
-//   } else {
-//     manageDiv.style.display = 'none';
-//   }
-//   const empty = document.getElementById('recurringEmpty');
-//   if (manageDiv.style.display === 'block') {
-//     if (Array.isArray(quickAddList) && quickAddList.length > 0) {
-//       empty.style.display = 'none';
-//     } else {
-//       empty.style.display = 'block';
-//     }
-//   }
-//   displayQuickAdd();
-// }
-
-function displayQuickAdd() {
-  organizeQuickAddByName();
-  const quickAddListDiv = document.getElementById('quick-add-entries');
-  if (!quickAddListDiv) return;
-
-  quickAddListDiv.innerHTML = '';
-
-  for (let i = 0; i < quickAddList.length; i++) {
-    const t = quickAddList[i];
-    const type = t.type;
-
-    quickAddListDiv.innerHTML += `
-      <div id="entry" class="expense-entry">
-        <span style="display: inline-block; width: 50%;">${t.title}</span>
-        <span style="display: inline-block; width: 35%;">${t.amount}</span>
-        <button class="edit-btn">+</button>
-      </div>
-      <div style="background-color: white; height: 2px; margin: 0px 20px;"></div>`
-
-  }
-}
 
 function reloadQuickAdd() {
   organizeQuickAddByName();
@@ -478,7 +449,7 @@ function reloadQuickAdd() {
     manageQuickAddListDiv.innerHTML += `
       <div id="entry" class="expense-entry">
         <span style="display: inline-block; width: 50%;">${t.title}</span>
-        <span style="display: inline-block; width: 25%;">${t.amount}</span>
+        <span style="display: inline-block; width: 25%;">${type}${t.amount}</span>
         <button class="edit-btn" onClick="deleteQuickAddEntry(${i})">🗑</button>
         <button class="edit-btn">✎</button>                  
       </div>
@@ -488,7 +459,20 @@ function reloadQuickAdd() {
 }
 
 function addQuickAddEntry(i) {
-  transactions.push(quickAddList[i]);
+  // Always uses current date and time
+  const date = new Date().toISOString().split('T')[0]
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  const time = `${hh}:${mm}`
+  entry = {
+    title: quickAddList[i].title,
+    type: quickAddList[i].type,
+    amount: quickAddList[i].amount,
+    date: date,
+    time: time
+  }
+  transactions.push(entry);
   localStorage.setItem('transactions', JSON.stringify(transactions));
   makeToast(`Added ${quickAddList[i].title || 'transaction'} to history`);
 }
@@ -500,14 +484,6 @@ function deleteQuickAddEntry(i) {
   reloadQuickAdd();
 }
 
-function showAddtoHistory(i) {
-  setDefaultDateToToday(`recurringDateInput${i}`);
-  setDefaultTimetoToday(`recurringTimeInput${i}`);
-  toggleDisplay(`confirmRecurringBtn${i}`, 'block');
-  toggleDisplay(`cancelRecurringBtn${i}`, 'block');
-  toggleDisplay(`recurringDateInput${i}`, 'block');
-  toggleDisplay(`recurringTimeInput${i}`, 'block');
-}
 
 function addRecurringToHistory(i) {
   const t = quickAddList[i];
