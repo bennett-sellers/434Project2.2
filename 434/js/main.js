@@ -609,6 +609,7 @@ function calculateStats() {
   if (!saved) {
     return;
   }
+  //alert(`${saved}`);
   
   const transactions = JSON.parse(saved);
   const now = new Date();
