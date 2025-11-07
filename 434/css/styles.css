@@ -746,7 +746,7 @@ span.gained-transition {
 .achievement-panel {
   position: fixed;
   top: 25%;
-  right: 650px;
+  right: 400px;
   width: 340px;
   background-color: #e6c11e;
   padding: 20px;
@@ -854,7 +854,7 @@ span.gained-transition {
 .history-panel {
   position: fixed;
   top: 25%;
-  right: 650px;
+  right: 400px;
   width: 340px;
   background-color: #e6c11e;
   padding: 20px;
@@ -900,25 +900,16 @@ span.gained-transition {
   box-shadow: -6px 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-#weekstats{
-  position: absolute;
-  top: 200px;
-  visibility: visible;
-}
 
-#monthstats{
+
+
+#monthchart{
   position: absolute;
-  top: 200px;
+  top: 450px;
   visibility: hidden;
 }
 
 #weekchart{
-  position: absolute;
-  top: 450px;
-  visibility: visible;
-}
-
-#monthchart{
   position: absolute;
   top: 450px;
   visibility: hidden;

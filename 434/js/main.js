@@ -228,16 +228,6 @@ function setBarProgress(barId, percent) {
 }
 
 function updateRings() {
-
-  /*const val2 = document.getElementById('input2');
-  const val3 = document.getElementById('input3');
-  
-  if (!val1 || !val2 || !val3) return;
-
-  setProgress('daily', val1.value, 180);
-  setProgress('weekly', val2.value, 140);
-  setProgress('monthly', val3.value, 100);*/
-
   let amt = localStorage.getItem("goalAmount");
   let numamt;
   if(amt == null || amt == ""){
@@ -246,14 +236,17 @@ function updateRings() {
     numamt = parseInt(amt, 10);
   }
   let goaltotal = numamt;
-  let curvalue = localStorage.getItem("net");
-  if (!curvalue){curvalue = 75;}
-  let goalprogress = curvalue;
+  let curvalue = localStorage.getItem("globalNet");
+  let goalprogress = 0;
+  if (curvalue == null){
+    goalprogress = 0;
+  }else{
+    goalprogress = parseInt(curvalue)
+  }
   let perc = Math.round(goalprogress/goaltotal * 100);
   setBarProgress('dailybar', perc );
   const labl = document.getElementById('proglabel');
   labl.textContent = `You are ${perc}% of the way to your goal of $${goaltotal}!`
-  
 }
 
 /*function toggle() {
@@ -390,6 +383,7 @@ function enterExpense() {
   document.getElementById('title-input').value = '';
   setDefaultDateToToday('date-input');
   setDefaultTimetoToday('time-input');
+  localStorage.setItem('a_log', "true");
 
   makeToast('Transaction added to history!');
 }
@@ -456,7 +450,7 @@ function createQuickAddEntry() {
 
   document.getElementById('quick-add-amount-input').value = '';
   document.getElementById('quick-add-title-input').value = '';
-
+  localStorage.setItem('a_quick', "true");
   toggleDisplay('create-new-quick-add-overlay', 'none');
   makeToast("New Quick Add entry created!")
   reloadQuickAdd();
@@ -691,6 +685,7 @@ function calculateStats() {
   let monthSpent = 0;
   let monthGained = 0;
   let categories = {};
+  let globalNet = 0;
 
   transactions.forEach(t => {
     const transactionDate = new Date(`${t.date}T${t.time}`);
@@ -723,14 +718,21 @@ function calculateStats() {
         categories[t.title].gained += amount;
       }
     }
-  });
 
+    //Track ALL
+    if(t.type === 'spent'){
+      globalNet -= amount;
+    } else if (t.type === 'gained'){
+      globalNet += amount;
+    }
+  });
+  localStorage.setItem("globalNet", globalNet.toString())
   // Update week stats
   const weekSpentEl = document.getElementById('week-spent');
   const weekGainedEl = document.getElementById('week-gained');
   const weekNetEl = document.getElementById('week-net');
   
-  if (weekSpentEl) weekSpentEl.textContent = `$${weekSpent.toFixed(2)}`;
+  if (weekSpentEl) weekSpentEl.textContent = `$-${weekSpent.toFixed(2)}`;
   if (weekGainedEl) weekGainedEl.textContent = `$${weekGained.toFixed(2)}`;
   if (weekNetEl) {
     const weekNet = weekGained - weekSpent;
@@ -743,7 +745,7 @@ function calculateStats() {
   const monthGainedEl = document.getElementById('month-gained');
   const monthNetEl = document.getElementById('month-net');
   
-  if (monthSpentEl) monthSpentEl.textContent = `$${monthSpent.toFixed(2)}`;
+  if (monthSpentEl) monthSpentEl.textContent = `$-${monthSpent.toFixed(2)}`;
   if (monthGainedEl) monthGainedEl.textContent = `$${monthGained.toFixed(2)}`;
   if (monthNetEl) {
     const monthNet = monthGained - monthSpent;
@@ -753,6 +755,7 @@ function calculateStats() {
 
   // Display category breakdown
   displayCategoryBreakdown(categories);
+  updateRings();
 }
 
 function displayCategoryBreakdown(categories) {
@@ -783,7 +786,7 @@ function displayCategoryBreakdown(categories) {
           <div class="stat-bar">
             <div class="stat-bar-fill ${totalSpent > totalGained ? 'spent' : ''}" 
                  style="width: ${percentage}%">
-              <span class="stat-bar-label" >$${(totalSpent + totalGained).toFixed(2)}</span>
+              <span class="stat-bar-label" style="font-weight: bold;">$${(net).toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -809,18 +812,18 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleChart(x){
   const ws = document.getElementById('weekstats');
   const ms = document.getElementById('monthstats');
-  const wc = document.getElementById('weekchart');
-  const mc = document.getElementById('monthchart');
+  //const wc = document.getElementById('weekchart');
+  //const mc = document.getElementById('monthchart');
   if(x == "w"){
     ws.style.visibility = 'visible';
-    wc.style.visibility = 'visible';
+    //wc.style.visibility = 'visible';
     ms.style.visibility = 'hidden';
-    mc.style.visibility = 'hidden';
+    //mc.style.visibility = 'hidden';
   }else{
     ms.style.visibility = 'visible';
-    mc.style.visibility = 'visible';
+    //mc.style.visibility = 'visible';
     ws.style.visibility = 'hidden';
-    wc.style.visibility = 'hidden';
+    //wc.style.visibility = 'hidden';
   }
 }
 

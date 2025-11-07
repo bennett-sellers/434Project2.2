@@ -25,7 +25,7 @@
     <div class="device">
       <!-- Stats Content -->
       <div id="Stats" class="tabcontent" style="display: block; overflow-y: auto; font-family: Verdana;">
-        <h1 style="font-size: 32pt;">Your Stats</h1>
+        <h1>Stats</h1>
         <button class="achievements" id = "achievements" onclick = "openAch()">
           Achievements
         </button>
@@ -79,7 +79,18 @@
           </div>
         </div>
           
-        <div style="margin-bottom: 15px;">
+        <br><br>
+        <div id = 'progressbar'>
+          <div>
+            <p class = "proglabel" id = "proglabel">You are 75% of the way to your goal of $1000!</p>
+          </div>
+          <div class="bars" id="bars">
+            <div class="bar"><div class="bar-fill" id="dailybar" style="background:#e6c11e"></div></div>
+          </div>
+          
+        </div>
+
+        <div style="margin-bottom: 15px; visibility: hidden;">
           <button id="week-btn" class="btn" onclick="toggleChart('w')">Last 7 Days</button>
           <button id="month-btn" class="btn" onclick="toggleChart('m')">Last 30 Days</button>
         </div>
@@ -109,7 +120,7 @@
 
         <!-- Trends -->
         <div class="stat-section">
-          <div id ="chartinfo">
+          <div id ="chartinfo" style="visibility: hidden;">
           <div class="stat-title">Trends</div>
             <div class="legend">
               <span><span class="key green"></span>Gained</span>
@@ -174,7 +185,7 @@
       function getTransactionsFromStorage() {
         try {
           const raw = localStorage.getItem('transactions');
-          const arr = raw ? JSON.parse(raw) : [];
+          const arr = JSON.parse(raw);
           if (!Array.isArray(arr)) return [];
 
           return arr.map((t) => {
