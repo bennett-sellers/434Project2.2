@@ -3,19 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototype - Log 2.0</title>
+    <title>WealthFit - Transaction Log</title>
     <link rel="stylesheet" href="css/styles.css">
   </head>
-<body>
+  <body>
     <div class="device">
       <!-- Log/Expenses Content -->
       <div id="Log" class="tabcontent" style="display: block;">
         <h1 id="log-header">Transaction Log</h1>
 
-        <div id="new-transaction-container" >
-          <h1 id="new-transaction-header">Add Transaction</h1>
-          <button id="spent-btn" class="btn" onclick="toggleExpenseType('spent')">Spent</button>
-          <button id="gained-btn" class="btn" onclick="toggleExpenseType('gained')">Gained</button>
+        <!-- Add Transaction Form -->
+        <div id="new-transaction-container">
+          <h2 id="new-transaction-header">Add Transaction</h2>
+          <div style="margin-bottom: 15px;">
+            <button id="spent-btn" class="btn" onclick="toggleExpenseType('spent')">Spent</button>
+            <button id="gained-btn" class="btn" onclick="toggleExpenseType('gained')">Gained</button>
+          </div>
           <input type="number" id="amount-input" placeholder="Amount" />
           <input type="text" id="title-input" placeholder="Title" />
           <input type="date" id="date-input" placeholder="Date">
@@ -23,40 +26,36 @@
           <button id="enter-btn" class="btn" onclick="enterExpense()">Enter</button> 
         </div>
 
-        <div id="quick-add-container" >
-            <button id="quick-add-btn" class="btn" onclick="">Quick Add </button>
-            <button id="manage-quick-add-btn" class="btn" onclick="toggleDisplay('manage-quick-add-container', 'block')">Manage Quick Add</button>
+        <!-- Quick Add Section -->
+        <div id="quick-add-container">
+          <button id="quick-add-btn" class="btn" onclick="">Quick Add</button>
+          <button id="manage-quick-add-btn" class="btn" onclick="toggleDisplay('manage-quick-add-container', 'block')">Manage Quick Add</button>
         </div>
 
+        <!-- Manage Quick Add Overlay -->
         <div id="manage-quick-add-container" class="manage-overlay" style="display: none;">
-          <div>
-            <button class="btn" onclick="toggleDisplay('manage-quick-add-container', 'none')">Back</button>
+          <div class="manage-header">
+            <button class="btn" onclick="toggleDisplay('manage-quick-add-container', 'none')">← Back</button>
+            <h2>Manage Quick Add</h2>
+          </div>
 
-            <button class="btn" onclick="">Add new</button>
+          <button class="btn" onclick="" style="margin-bottom: 20px;">+ Add New Quick Transaction</button>
 
-              <div id="test" class="expense-entry">
-
-                <div id="entry" class="expense-entry">
-                  <div style="text-align: left; color: black;">
-                    <div style="display: inline-block;">test</div>
-                    <div style="display: inline-block;">test</div>
-                    <div style="display: inline-block;">test</div>
-                    <div style="display: inline-block;">test</div>
-                  </div>
-                  <h2 id="entry-title">Title</h2>
-                  <div><span>Spent</span><span>$</span></div>
-
-                  <button id="edit-btn" class="btn" onclick="editQuickAddEntry()">Edit</button>
-                  <button id="delete-btn" class="btn" onclick="deleteQuickAddEntry()">Delete</button>
-                </div>
-
-
-
-
+          <!-- Quick Add Entries Container -->
+          <div id="test">
+            <!-- Example Entry (this would be dynamically generated) -->
+            <div id="entry">
+              <h2 id="entry-title">Coffee</h2>
+              <div id="entry-type">Spent</div>
+              <div id="entry-amount">$5.00</div>
+              <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                <button id="edit-btn" class="btn" onclick="editQuickAddEntry()">Edit</button>
+                <button id="delete-btn" class="btn" onclick="deleteQuickAddEntry()">Delete</button>
               </div>
             </div>
           </div>
-        
+
+          <!-- Recurring Transactions List -->
           <div id="recurringList" class="recurring-list">
             <!-- Recurring transactions will be rendered here -->
           </div>
@@ -64,30 +63,32 @@
           <div id="recurringEmpty" class="empty-state" style="display: none;">
             No recurring transactions yet.
           </div>
+        </div>
       </div>
-    </div>
+
       <!-- Bottom Navigation -->
       <button class="tablink" onclick="window.location.href='goals.html'">
-          <img src="assets/text_icon.png" class="icon" alt="goals"/>
-          <br />Goals
+        <img src="assets/text_icon.png" class="icon" alt="goals"/>
+        <br />Goals
       </button>
-      <button class="tablink" style="background-color: orange;">
-          <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
-          <br />Log
+      <button class="tablink" style="background-color: var(--nav-active); border-top-color: var(--primary-color);">
+        <img src="assets/lower_right_icon.png" class="icon" alt="log"/>
+        <br />Log
       </button>
       <button class="tablink" onclick="window.location.href='index.html'">
-          <img src="assets/colors_icon.png" class="icon" alt="home" />
-          <br />Home
+        <img src="assets/colors_icon.png" class="icon" alt="home" />
+        <br />Home
       </button>
       <button class="tablink" onclick="window.location.href='stats.html'">
-          <img src="assets/user.png" class="icon" alt="stats" />
-          <br />Stats
+        <img src="assets/user.png" class="icon" alt="stats" />
+        <br />Stats
       </button>
       <button class="tablink" onclick="window.location.href='settings.html'">
-          <img src="assets/choices_icon.png" class="icon" alt="settings"/>
-          <br />Settings
+        <img src="assets/choices_icon.png" class="icon" alt="settings"/>
+        <br />Settings
       </button>
     </div>
+
     <script src="js/main.js"></script>
   </body>
 </html>
