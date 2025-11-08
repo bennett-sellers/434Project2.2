@@ -841,7 +841,7 @@ function toggleChart(x){
 }
 
 function clearProgress(){
-  let userConfirmed = confirm("Are you sure you want to clear your progress? This will clear all transactions and they will not be able to be recovered.");
+  let userConfirmed = confirm("Are you sure you want to clear your progress? This will clear all transactions and this action cannot be undone.");
 
   if (userConfirmed) {
     localStorage.removeItem("transactions");
