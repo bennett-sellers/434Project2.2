@@ -90,10 +90,7 @@
           
         </div>
 
-        <div style="margin-bottom: 15px; visibility: hidden;">
-          <button id="week-btn" class="btn" onclick="toggleChart('w')">Last 7 Days</button>
-          <button id="month-btn" class="btn" onclick="toggleChart('m')">Last 30 Days</button>
-        </div>
+        <br><br>
 
         <!-- Last Week Stats -->
         <div id = 'weekstats'>
@@ -170,152 +167,8 @@
           try { calculateStats(); } catch (e) {}
         }
         // Build graphs regardless.
-        drawTrends();
+       
       });
-
-      // --- Robust fetch & normalize all transactions ---
-      function getTransactionsFromStorage() {
-        try {
-          const raw = localStorage.getItem('transactions');
-          const arr = JSON.parse(raw);
-          if (!Array.isArray(arr)) return [];
-
-          return arr.map((t) => {
-            // amount: strip $, commas, spaces
-            const amt = parseFloat(String(t.amount ?? 0).toString().replace(/[^\d.-]/g, '')) || 0;
-
-            // date: prefer t.date (YYYY-MM-DD); fallbacks accepted
-            let d;
-            if (t.date) {
-              // if time exists, respect it; else anchor at midnight
-              d = new Date(t.date + 'T' + (t.time ? t.time : '00:00'));
-            } else if (t.datetime) {
-              d = new Date(t.datetime);
-            } else if (t.createdAt) {
-              d = new Date(t.createdAt);
-            } else {
-              // last resort: today
-              d = new Date();
-            }
-            d.setHours(0,0,0,0);
-            const key = d.toISOString().slice(0,10);
-
-            // normalize type
-            let type = (t.type || '').toString().toLowerCase();
-            if (!type) type = amt >= 0 ? 'gained' : 'spent';
-            if (type.includes('income') || type.includes('gain') || type === 'deposit') type = 'gained';
-            if (type.includes('expense') || type.includes('spend') || type === 'withdrawal') type = 'spent';
-
-            // store absolute amount, sign via type
-            const absAmt = Math.abs(amt);
-            return { key, dateObj: d, amount: absAmt, type };
-          });
-        } catch {
-          return [];
-        }
-      }
-
-      // Aggregate last N days (oldest -> newest), summing multiple tx per day
-      function aggregateDays(nDays) {
-        const tx = getTransactionsFromStorage();
-        const today = new Date();
-        today.setHours(0,0,0,0);
-
-        const buckets = [];
-        const indexByKey = new Map();
-        for (let i = nDays - 1; i >= 0; i--) {
-          const d = new Date(today);
-          d.setDate(today.getDate() - i);
-          d.setHours(0,0,0,0);
-          const key = d.toISOString().slice(0,10);
-          const label = (d.getMonth()+1) + '/' + d.getDate();
-          indexByKey.set(key, buckets.length);
-          buckets.push({ key, label, gained: 0, spent: 0 });
-        }
-
-        for (const t of tx) {
-          const idx = indexByKey.get(t.key);
-          if (idx === undefined) continue; // out of range
-          if (t.type === 'gained') buckets[idx].gained += t.amount;
-          else if (t.type === 'spent') buckets[idx].spent += t.amount;
-        }
-
-        return buckets;
-      }
-
-      function drawTrends() {
-        drawBarChart('chart-week',  aggregateDays(7));
-        drawBarChart('chart-month', aggregateDays(30), { xStepHint: 3 });
-      }
-
-      // Simple dual-bar chart (gained/spent per day)
-      function drawBarChart(canvasId, data, opts = {}) {
-        const c = document.getElementById(canvasId);
-        if (!c) return;
-        const ctx = c.getContext('2d');
-
-        // Clear
-        ctx.clearRect(0, 0, c.width, c.height);
-
-        // Padding & sizes
-        const padL = 36, padR = 10, padT = 14, padB = 28;
-        const w = c.width - padL - padR;
-        const h = c.height - padT - padB;
-
-        // Axes
-        ctx.strokeStyle = '#666';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(padL, padT);
-        ctx.lineTo(padL, padT + h);
-        ctx.lineTo(padL + w, padT + h);
-        ctx.stroke();
-
-        // Scale
-        let maxVal = 0;
-        data.forEach(d => { maxVal = Math.max(maxVal, d.gained, d.spent); });
-        if (maxVal <= 0) {
-          ctx.fillStyle = '#bbb';
-          ctx.font = '12px Verdana, sans-serif';
-          ctx.fillText('No data', padL + 6, padT + h - 6);
-          return;
-        }
-
-        const n = data.length;
-        const groupW = w / n;
-        const gap = Math.max(2, Math.floor(groupW * 0.15));
-        const barW = Math.max(4, Math.floor((groupW - gap) / 2));
-
-        data.forEach((d, i) => {
-          const x0 = padL + i * groupW;
-
-          // Gained (green)
-          const gh = Math.round((d.gained / maxVal) * h);
-          ctx.fillStyle = '#4CAF50';
-          ctx.fillRect(x0 + gap/2, padT + (h - gh), barW, gh);
-
-          // Spent (red)
-          const sh = Math.round((d.spent / maxVal) * h);
-          ctx.fillStyle = '#FF3B30';
-          ctx.fillRect(x0 + gap/2 + barW + 2, padT + (h - sh), barW, sh);
-
-          // X labels (sparser for month)
-          const showEvery = opts.xStepHint || 1;
-          if ((i % showEvery) === 0) {
-            ctx.fillStyle = '#aaa';
-            ctx.font = '10px Verdana, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText(d.label, x0 + groupW/2, padT + h + 14);
-          }
-        });
-
-        // Y max label
-        ctx.fillStyle = '#aaa';
-        ctx.font = '10px Verdana, sans-serif';
-        ctx.textAlign = 'right';
-        ctx.fillText('$' + maxVal.toFixed(0), padL - 6, padT + 8);
-        ctx.textAlign = 'left';
-      }
     </script>
   </body>
 </html>

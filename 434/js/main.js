@@ -822,23 +822,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-function toggleChart(x){
-  const ws = document.getElementById('weekstats');
-  const ms = document.getElementById('monthstats');
-  //const wc = document.getElementById('weekchart');
-  //const mc = document.getElementById('monthchart');
-  if(x == "w"){
-    ws.style.visibility = 'visible';
-    //wc.style.visibility = 'visible';
-    ms.style.visibility = 'hidden';
-    //mc.style.visibility = 'hidden';
-  }else{
-    ms.style.visibility = 'visible';
-    //mc.style.visibility = 'visible';
-    ws.style.visibility = 'hidden';
-    //wc.style.visibility = 'hidden';
-  }
-}
 
 function clearProgress(){
   let userConfirmed = confirm("Are you sure you want to clear your progress? This will clear all transactions and this action cannot be undone.");
